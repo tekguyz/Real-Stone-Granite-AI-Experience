@@ -1,0 +1,352 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Phone, PhoneOff, Mic, User, Calendar, Database, ShieldCheck, MessageSquare } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { sendAppointmentEmail } from '@/app/actions/sendEmail';
+
+interface DeviceSimulatorProps {
+  currentStatus: string;
+  onStatusChange: (status: string) => void;
+  onLeadCreateOrUpdate: (lead: any) => void;
+  leadData: any;
+  onEmailHtmlGenerated?: (html: string) => void;
+}
+
+export default function DeviceSimulator({
+  currentStatus,
+  onStatusChange,
+  onLeadCreateOrUpdate,
+  leadData,
+  onEmailHtmlGenerated,
+}: DeviceSimulatorProps) {
+  const [phone, setPhone] = useState('(415) 555-2673');
+  const [name, setName] = useState('Alex Ubilla');
+  const [isCalling, setIsCalling] = useState(false);
+  const [callDuration, setCallDuration] = useState(0);
+  const [simStep, setSimStep] = useState(0);
+
+  const showNotification = currentStatus === 'ANALYSIS_COMPLETE';
+  const emailSentRef = useRef(false);
+
+  const triggerEmailDispatch = async () => {
+    const response = await sendAppointmentEmail(
+      `${name.toLowerCase().replace(/\s+/g, '')}@example.com`,
+      name,
+      leadData.material_preference || 'Quartzite (Calacatta)',
+      leadData.project_scope || 'Kitchen Countertop Fabrication',
+      leadData.appointment_timestamp || new Date(Date.now() + 86400000).toISOString()
+    );
+    if (response.success && response.html) {
+      onEmailHtmlGenerated?.(response.html);
+    }
+  };
+
+  // Duration timer
+  useEffect(() => {
+    if (!isCalling) return;
+    const timer = setInterval(() => {
+      setCallDuration((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [isCalling]);
+
+  // Handle slide-in notification and automatic email dispatch when analysis completes
+  useEffect(() => {
+    if (currentStatus === 'ANALYSIS_COMPLETE') {
+      if (!emailSentRef.current) {
+        emailSentRef.current = true;
+        triggerEmailDispatch();
+      }
+    } else {
+      emailSentRef.current = false;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStatus]);
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleStartCall = () => {
+    setIsCalling(true);
+    setCallDuration(0);
+    setSimStep(0);
+    onStatusChange('CALL_IN_PROGRESS');
+
+    const initialLead = {
+      customer_phone: phone,
+      customer_name: name || 'Interested Customer',
+      current_status: 'CALL_IN_PROGRESS',
+      industry_id: 'stone-granite',
+      project_scope: 'Awaiting discovery...',
+      material_preference: 'Awaiting preference...',
+    };
+    onLeadCreateOrUpdate(initialLead);
+  };
+
+  const handleEndCall = () => {
+    setIsCalling(false);
+    onStatusChange('ANALYSIS_COMPLETE');
+  };
+
+  // High-fidelity speech dialogue sequence
+  const simulationScript = [
+    {
+      agent: "Hi! Thanks for calling Real Stone & Granite. My name is Sarah. Are you looking to fabricate custom kitchen countertops, marble slab treatments, or perhaps a beautiful memorial monument today?",
+      options: [
+        "I need a custom Quartzite kitchen countertop fabricated.",
+        "We want to install luxury Marble for our master bathroom.",
+        "I am looking for custom edge treatments for memorial monuments."
+      ]
+    },
+    {
+      agent: "Quartzite is a phenomenal choice—it has the luxury appeal of marble but is incredibly durable. I have updated our StoneWorks CRM with your project scope: Quartzite countertop fabrication.",
+      options: [
+        "Perfect. I prefer the Calacatta Quartzite pattern.",
+        "Excellent. What edge treatments do you offer?",
+        "Can I get a brochure sent to my email?"
+      ],
+      triggerCRM: {
+        projectType: 'Kitchen Countertop Fabrication',
+        materialClass: 'Quartzite (Calacatta)',
+      }
+    },
+    {
+      agent: "Outstanding choice! I have marked your preference as Calacatta Quartzite. To secure your fabrication slots, we highly recommend a free showroom consultation with our layout template specialists. We have slots open tomorrow at 10:00 AM or Wednesday at 2:00 PM.",
+      options: [
+        "Let's book tomorrow at 10:00 AM.",
+        "Wednesday at 2:00 PM works perfectly.",
+        "I will call back to schedule."
+      ]
+    },
+    {
+      agent: "Fantastic! I've booked your showroom walkthrough and template consultation. A summary brochure and transactional confirmation have been dispatched to your device immediately. Anything else I can assist with?",
+      options: [
+        "No, that is all. Thank you Sarah!",
+        "Could you send me your physical address?"
+      ],
+      triggerSchedule: {
+        isoDateTime: '2026-06-30T10:00:00-07:00',
+        consultationType: 'Showroom & Templating Session'
+      }
+    }
+  ];
+
+  const handleOptionSelect = (optionText: string) => {
+    const currentScript = simulationScript[simStep];
+    
+    if (currentScript.triggerCRM) {
+      onLeadCreateOrUpdate({
+        ...leadData,
+        customer_name: name,
+        customer_phone: phone,
+        project_scope: currentScript.triggerCRM.projectType,
+        material_preference: currentScript.triggerCRM.materialClass,
+        current_status: 'MOCK_CRM_SYNCED',
+      });
+      onStatusChange('MOCK_CRM_SYNCED');
+    }
+
+    if (currentScript.triggerSchedule) {
+      onLeadCreateOrUpdate({
+        ...leadData,
+        appointment_timestamp: '2026-06-30T10:00:00-07:00',
+        current_status: 'ANALYSIS_COMPLETE',
+      });
+      onStatusChange('ANALYSIS_COMPLETE');
+    }
+
+    if (simStep < simulationScript.length - 1) {
+      setSimStep((prev) => prev + 1);
+    } else {
+      handleEndCall();
+    }
+  };
+
+  return (
+    <div id="device-simulator-container" className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col items-center relative overflow-hidden">
+      
+      {/* Slide-In Text Notification Alert Bubble (Spring Animation) */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div
+            initial={{ y: -100, opacity: 0, scale: 0.9 }}
+            animate={{
+              y: 16,
+              opacity: 1,
+              scale: 1,
+              transition: { type: 'spring', stiffness: 300, damping: 20 }
+            }}
+            exit={{ y: -100, opacity: 0 }}
+            className="absolute top-0 z-50 w-[290px] bg-white/95 backdrop-blur-md border border-[var(--color-border-hairline)] rounded-xl shadow-lg p-3.5 flex gap-3"
+          >
+            <div className="w-9 h-9 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center shrink-0">
+              <MessageSquare className="w-4 h-4" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-center">
+                <span className="text-[11px] font-bold text-gray-900 font-sans">RSG Telephony</span>
+                <span className="text-[9px] text-gray-400 font-mono">Just Now</span>
+              </div>
+              <p className="text-xs text-gray-600 mt-1 font-sans leading-relaxed">
+                Walkthrough appointment confirmed for tomorrow at 10:00 AM. Checklist sent to your email address!
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sleek, Minimal Smartphone Framework */}
+      <div className="w-[320px] h-[580px] bg-white rounded-[32px] shadow-lg border-8 border-gray-900 p-4 relative flex flex-col overflow-hidden">
+        {/* Dynamic status bar */}
+        <div className="flex justify-between items-center px-4 py-1 text-[11px] font-sans font-semibold text-gray-500 select-none">
+          <span>11:44 AM</span>
+          <div className="w-16 h-4 bg-gray-900 rounded-b-xl absolute top-0 left-1/2 -translate-x-1/2"></div>
+          <div className="flex gap-1 items-center">
+            <span className="w-3.5 h-2 bg-gray-400 rounded-xs inline-block"></span>
+            <span className="text-[10px]">5G</span>
+          </div>
+        </div>
+
+        {/* Smartphone Screen Content */}
+        <div className="flex-1 flex flex-col justify-between mt-4">
+          <AnimatePresence mode="wait">
+            {!isCalling ? (
+              <motion.div
+                key="setup"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-col gap-5 pt-4"
+              >
+                <div className="text-center">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
+                    Live Demo Portal
+                  </span>
+                  <h3 className="text-xl font-sans tracking-tight text-gray-900 mt-1">
+                    Voice Agent Sarah
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1 px-4 leading-relaxed">
+                    Test the AI voice assistant pipeline on our simulated active phone line.
+                  </p>
+                </div>
+
+                <div className="flex flex-col gap-3 mt-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                      Caller Name
+                    </label>
+                    <div className="relative">
+                      <User className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Alex Ubilla"
+                        className="w-full pl-9 pr-3 py-2 bg-[var(--color-surface-card)] border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] text-sm font-sans focus:outline-none focus:ring-1 focus:ring-gray-900"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                      Simulated Phone Number
+                    </label>
+                    <div className="relative">
+                      <Phone className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
+                      <input
+                        type="text"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="(415) 555-2673"
+                        className="w-full pl-9 pr-3 py-2 bg-[var(--color-surface-card)] border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] text-sm font-sans focus:outline-none focus:ring-1 focus:ring-gray-900"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleStartCall}
+                  className="w-full mt-6 bg-[var(--color-primary)] hover:bg-gray-800 text-white py-3 rounded-[var(--radius-md)] text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-xs"
+                >
+                  <Phone className="w-4 h-4" /> Start Inbound Call
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="calling"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex-1 flex flex-col justify-between py-2"
+              >
+                {/* Active Call Header */}
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Phone className="w-7 h-7 text-green-600 animate-bounce" />
+                  </div>
+                  <h4 className="text-lg font-sans font-semibold text-gray-900">{name || 'Interested Customer'}</h4>
+                  <span className="text-xs text-gray-500 block font-mono">{phone}</span>
+                  <span className="text-xs font-semibold text-green-600 tracking-wider uppercase mt-1 block">
+                    {formatDuration(callDuration)}
+                  </span>
+                </div>
+
+                {/* Simulated AI Agent Response options */}
+                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 my-4 flex-1 flex flex-col justify-between">
+                  <div className="flex-1 flex flex-col justify-center text-center p-1 mb-2">
+                    <span className="text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-1">
+                      Sarah (Voice Assistant)
+                    </span>
+                    <p className="text-[12px] text-gray-800 font-sans leading-relaxed">
+                      &ldquo;{simulationScript[simStep].agent}&rdquo;
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-[9px] uppercase font-bold tracking-widest text-gray-400 block">
+                      Respond as Caller:
+                    </span>
+                    {simulationScript[simStep].options.map((opt, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleOptionSelect(opt)}
+                        className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] p-2 text-[11px] font-sans font-medium text-gray-700 transition-colors"
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Call Action Triggers */}
+                <div className="flex justify-center gap-6 pb-2 shrink-0">
+                  <div className="flex flex-col items-center">
+                    <button className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
+                      <Mic className="w-5 h-5" />
+                    </button>
+                    <span className="text-[10px] text-gray-400 mt-1">Mute</span>
+                  </div>
+
+                  <div className="flex flex-col items-center">
+                    <button
+                      onClick={handleEndCall}
+                      className="w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors"
+                    >
+                      <PhoneOff className="w-5 h-5" />
+                    </button>
+                    <span className="text-[10px] text-red-600 font-semibold mt-1">End</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}

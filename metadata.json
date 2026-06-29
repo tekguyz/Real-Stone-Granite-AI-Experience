@@ -1,0 +1,6 @@
+{
+  "name": "Real Stone & Granite AI Experience",
+  "description": "A live, high-fidelity interactive sales demo for Real Stone & Granite showcasing a Multi-Agent AI Experience Engine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
