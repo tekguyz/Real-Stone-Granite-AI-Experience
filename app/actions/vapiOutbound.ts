@@ -1,10 +1,24 @@
 // app/actions/vapiOutbound.ts
 'use server';
 
+const AUTHORIZED_NUMBERS = ['7726349743', '7724899964'];
+
 export async function triggerOutboundCall(targetPhoneNumber: string) {
   const apiKey = process.env.VAPI_API_KEY;
   const assistantId = "71038d0a-fde3-4c47-8def-cb03b26fa46e";
   const phoneNumberId = process.env.VAPI_PHONE_NUMBER_ID;
+
+  // Clean raw digits to enforce strict whitelist restrictions
+  const cleanDigits = targetPhoneNumber.replace(/\D/g, '');
+  const last10Digits = cleanDigits.slice(-10);
+
+  if (!AUTHORIZED_NUMBERS.includes(last10Digits)) {
+    console.warn(`Unauthorized phone call attempt blocked to: ${targetPhoneNumber}`);
+    return { 
+      success: false, 
+      error: "For demonstration purposes, live outbound calling is restricted to verified showroom test devices." 
+    };
+  }
 
   // Pre-flight assertion engine: Catches environment errors BEFORE hitting Vapi
   if (!apiKey) {
