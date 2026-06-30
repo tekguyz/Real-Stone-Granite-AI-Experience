@@ -186,7 +186,7 @@ export default function DeviceSimulator({
   const isWednesdaySelection = leadData?.appointment_timestamp?.includes('14:00') || leadData?.appointment_timestamp?.includes('2026-07-01');
 
   return (
-    <div id="device-simulator-container" className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col items-center relative overflow-hidden shadow-xs">
+    <div id="device-simulator-container" className="w-full flex flex-col items-center relative select-none">
       
       {/* Slide-Up Text Notification Alert Bubble (Physics Spring Animation) */}
       <AnimatePresence>
@@ -200,7 +200,7 @@ export default function DeviceSimulator({
               transition: { type: 'spring', stiffness: 220, damping: 18 }
             }}
             exit={{ y: 150, opacity: 0 }}
-            className="absolute bottom-6 z-50 w-[290px] bg-white/95 backdrop-blur-md border border-[var(--color-border-hairline)] rounded-xl shadow-lg p-3.5 flex gap-3"
+            className="absolute bottom-6 left-3 right-3 z-50 bg-white/95 backdrop-blur-md border border-[var(--color-border-hairline)] rounded-xl shadow-lg p-3.5 flex gap-3"
           >
             <div className="w-9 h-9 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center shrink-0">
               <MessageSquare className="w-4 h-4" />
@@ -219,7 +219,7 @@ export default function DeviceSimulator({
       </AnimatePresence>
 
       {/* Sleek, Minimal Smartphone Framework */}
-      <div className="w-[320px] h-[580px] bg-white rounded-[32px] shadow-lg border-8 border-gray-900 p-4 relative flex flex-col overflow-hidden">
+      <div className="w-full max-w-[310px] sm:max-w-[320px] h-[560px] sm:h-[580px] bg-white rounded-[32px] shadow-lg border-8 border-gray-900 p-4 relative flex flex-col overflow-hidden">
         {/* Dynamic status bar */}
         <div className="flex justify-between items-center px-4 py-1 text-[11px] font-sans font-semibold text-gray-500 select-none">
           <span>11:44 AM</span>
