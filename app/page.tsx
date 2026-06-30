@@ -70,16 +70,16 @@ export default function DashboardPage() {
       <header className="h-16 bg-white border-b border-[var(--color-border-hairline)] flex items-center justify-between px-6 shrink-0 z-10">
         <div className="flex items-center gap-6">
           <h1 className="text-xl font-bold tracking-tight text-gray-900 select-none flex items-center gap-2">
-            Real Stone & Granite <span className="text-gray-400 font-normal">|</span> <span className="text-gray-600 font-medium text-base">Control Workspace</span>
+            Real Stone & Granite <span className="text-gray-400 font-normal">|</span> <span className="text-gray-600 font-medium text-base">TEKGUYZ Demo</span>
           </h1>
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-[var(--radius-md)] bg-[var(--color-surface-card)] border border-[var(--color-border-hairline)]">
             <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
-            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">System Operational</span>
+            <span className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Showroom Online</span>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">TELEPHONY:</span>
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Assistant Status:</span>
           {getStatusBadge(currentStatus)}
         </div>
       </header>
@@ -151,7 +151,7 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-[var(--color-border-hairline)] flex justify-between items-center text-xs">
-                  <span className="text-gray-500">Workspace Status Update Trigger</span>
+                  <span className="text-gray-500">Customer Preference Verified</span>
                   <div className="flex gap-2">
                     <span className="px-2 py-1 rounded-[var(--radius-md)] bg-white border border-[var(--color-border-hairline)] font-medium text-gray-700">
                       Edge treatments verified
@@ -187,8 +187,8 @@ export default function DashboardPage() {
                       <RefreshCw className={`w-4 h-4 text-gray-600 ${currentStatus === 'CALL_IN_PROGRESS' ? 'animate-spin' : ''}`} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-900">Automation Pipe: StoneWorks CRM</h4>
-                      <p className="text-xs text-gray-500 leading-none mt-1">Status: Active & Synchronized</p>
+                      <h4 className="text-sm font-semibold text-gray-900">Showroom CRM Sync</h4>
+                      <p className="text-xs text-gray-500 leading-none mt-1">Status: Ready & Active</p>
                     </div>
                   </div>
                   

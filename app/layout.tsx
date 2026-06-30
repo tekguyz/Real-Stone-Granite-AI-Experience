@@ -8,11 +8,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tekguyz-sarah.vercel.app'),
   title: 'Real Stone & Granite | Autonomous Front Desk Engine',
   description: 'Capturing high-value architectural masonry and custom countertop leads around the clock seamlessly.',
   robots: {
     index: true,
     follow: true,
+  },
+  openGraph: {
+    title: 'Real Stone & Granite | Autonomous Front Desk Engine',
+    description: 'Capturing high-value architectural masonry and custom countertop leads around the clock seamlessly.',
+    url: 'https://tekguyz-sarah.vercel.app',
+    siteName: 'Real Stone & Granite',
+    images: [
+      {
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Real Stone & Granite | Autonomous Front Desk Engine',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
   },
 };
 

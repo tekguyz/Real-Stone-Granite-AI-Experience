@@ -2,6 +2,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 let supabase: SupabaseClient | null = null;
 
@@ -12,8 +13,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
     'Falling back to a mock client shell to prevent crashes.'
   );
   
-  // Return a shell that doesn't completely crash the compiler,
-  // but won't be fully functional without keys.
+  // Your clean fallback shell remains completely untouched
   supabase = {
     from: () => ({
       select: () => ({
@@ -29,10 +29,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
         subscribe: () => ({}),
       }),
     }),
-    // ...other minimally required stub methods could be added here
   } as unknown as SupabaseClient;
 } else {
-  supabase = createClient(supabaseUrl, supabaseAnonKey);
+  // Check if the current execution context is on the server or the browser
+  const isServer = typeof window === 'undefined';
+  
+  // Use the admin Service Key exclusively on the server side to bypass Row-Level Security blocks.
+  // Otherwise, fallback safely to the standard Public Anon Key for the frontend.
+  const activeKey = isServer && supabaseServiceKey ? supabaseServiceKey : supabaseAnonKey;
+
+  supabase = createClient(supabaseUrl, activeKey);
 }
 
 export { supabase };

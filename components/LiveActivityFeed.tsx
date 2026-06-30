@@ -40,7 +40,7 @@ export default function LiveActivityFeed({
         {
           id: 'init-1',
           sender: 'system',
-          text: 'Local environment is active. To connect live telemetry, configure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
+          text: 'Showroom Demonstration Sandbox is active. Voice transcriptions and real-time operations update below.',
           timestamp: new Date(),
         },
         {
@@ -171,7 +171,7 @@ export default function LiveActivityFeed({
       <div className="flex items-center justify-between pb-4 border-b border-[var(--color-border-hairline)] mb-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-            Live Stream
+            Dialogue Stream
           </span>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-[var(--color-border-hairline)] text-[10px]">
             {connectionStatus === 'connected' && (
@@ -242,7 +242,7 @@ export default function LiveActivityFeed({
               >
                 {message.sender === 'system' ? (
                   <div className="py-1 px-4 text-center text-gray-500 font-mono text-[11px]">
-                    [SYSTEM] {message.text}
+                    Update: {message.text}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-1 max-w-[80%]">
@@ -281,7 +281,7 @@ export default function LiveActivityFeed({
           + Agent Response
         </button>
         <button
-          onClick={() => handleSimulateSentence('system', "CRM updated: customer name resolved to 'Alex', material set to 'Marble'")}
+          onClick={() => handleSimulateSentence('system', "CRM synced: customer name set to 'Leonardo', material set to 'Marble'")}
           className="text-[11px] bg-white hover:bg-gray-50 text-gray-700 font-medium py-1 px-2.5 rounded-md border border-[var(--color-border-hairline)] shrink-0 transition-colors"
         >
           + CRM Event

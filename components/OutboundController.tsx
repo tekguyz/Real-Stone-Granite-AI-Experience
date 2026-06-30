@@ -10,10 +10,7 @@ import { triggerOutboundCall } from '@/app/actions/vapiOutbound';
 const phoneSchema = z.object({
   phoneNumber: z
     .string()
-    .min(10, { message: 'Phone number must contain at least 10 digits' })
-    .regex(/^\+?[1-9]\d{9,14}$/, {
-      message: 'Enter phone in E.164 standard (e.g., +14155552673)',
-    }),
+    .min(10, { message: 'Phone number must contain at least 10 digits' }),
 });
 
 type PhoneFormValues = z.infer<typeof phoneSchema>;
@@ -44,13 +41,33 @@ export default function OutboundController({ onCallInitiated }: OutboundControll
     setApiError(null);
     setSuccessMsg(null);
 
+    // Clean and auto-normalize input phone formats to E.164
+    const rawDigits = values.phoneNumber.replace(/\D/g, '');
+    let normalizedPhone = '';
+    
+    if (values.phoneNumber.startsWith('+')) {
+      normalizedPhone = '+' + rawDigits;
+    } else if (rawDigits.length === 10) {
+      normalizedPhone = '+1' + rawDigits;
+    } else if (rawDigits.length === 11 && rawDigits.startsWith('1')) {
+      normalizedPhone = '+' + rawDigits;
+    } else {
+      normalizedPhone = '+' + rawDigits;
+    }
+
+    if (normalizedPhone.length < 11 || !/^\+?[1-9]\d{9,14}$/.test(normalizedPhone)) {
+      setApiError('Please enter a valid phone number (e.g., (415) 555-2673)');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const result = await triggerOutboundCall(values.phoneNumber);
+      const result = await triggerOutboundCall(normalizedPhone);
 
       if (result.success) {
         setSuccessMsg('Outbound call successfully dispatched via Vapi.');
-        const callId = (result.data as any)?.id || `vapi-sim-${values.phoneNumber.replace(/\D/g, '')}`;
-        onCallInitiated?.(values.phoneNumber, callId);
+        const callId = (result.data as any)?.id || `vapi-sim-${normalizedPhone.replace(/\D/g, '')}`;
+        onCallInitiated?.(normalizedPhone, callId);
         reset();
       } else {
         setApiError(result.error || 'Call routing failed. Please check line parameters and retry.');
@@ -77,15 +94,15 @@ export default function OutboundController({ onCallInitiated }: OutboundControll
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5">
         <div className="flex flex-col gap-1.5">
           <div className="relative">
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-xs">
-              E.164
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-xs">
+              Tel
             </span>
             <input
               type="text"
-              placeholder="+14155552673"
+              placeholder="(415) 555-2673"
               disabled={isLoading}
               {...register('phoneNumber')}
-              className={`w-full pl-14 pr-3 py-2.5 bg-white border rounded-md text-sm font-sans focus:outline-hidden focus:ring-1 focus:ring-gray-900 transition-colors ${
+              className={`w-full pl-12 pr-3 py-2.5 bg-white border rounded-md text-sm font-sans focus:outline-hidden focus:ring-1 focus:ring-gray-900 transition-colors ${
                 errors.phoneNumber || apiError
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-[var(--color-border-hairline)]'

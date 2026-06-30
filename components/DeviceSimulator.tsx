@@ -22,7 +22,8 @@ export default function DeviceSimulator({
   onEmailHtmlGenerated,
 }: DeviceSimulatorProps) {
   const [phone, setPhone] = useState('(415) 555-2673');
-  const [name, setName] = useState('Alex Ubilla');
+  const [name, setName] = useState('Leonardo Da Vinci');
+  const [email, setEmail] = useState('leonardo@example.com');
   const [isCalling, setIsCalling] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [simStep, setSimStep] = useState(0);
@@ -32,7 +33,7 @@ export default function DeviceSimulator({
 
   const triggerEmailDispatch = async () => {
     const response = await sendAppointmentEmail(
-      `${name.toLowerCase().replace(/\s+/g, '')}@example.com`,
+      email,
       name,
       leadData.material_preference || 'Quartzite (Calacatta)',
       leadData.project_scope || 'Kitchen Countertop Fabrication',
@@ -189,7 +190,7 @@ export default function DeviceSimulator({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex justify-between items-center">
-                <span className="text-[11px] font-bold text-gray-900 font-sans">RSG Telephony</span>
+                <span className="text-[11px] font-bold text-gray-900 font-sans">Showroom Desk</span>
                 <span className="text-[9px] text-gray-400 font-mono">Just Now</span>
               </div>
               <p className="text-xs text-gray-600 mt-1 font-sans leading-relaxed">
@@ -246,7 +247,23 @@ export default function DeviceSimulator({
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Alex Ubilla"
+                        placeholder="Leonardo Da Vinci"
+                        className="w-full pl-9 pr-3 py-2 bg-[var(--color-surface-card)] border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] text-sm font-sans focus:outline-none focus:ring-1 focus:ring-gray-900"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                      Destination Email
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2 text-sm font-semibold text-gray-400">@</span>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="leonardo@example.com"
                         className="w-full pl-9 pr-3 py-2 bg-[var(--color-surface-card)] border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] text-sm font-sans focus:outline-none focus:ring-1 focus:ring-gray-900"
                       />
                     </div>

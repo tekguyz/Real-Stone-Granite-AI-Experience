@@ -17,7 +17,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
   const [activeTab, setActiveTab] = useState<'preview' | 'html'>('preview');
 
   // Generate fallback/mock HTML in case we are in setup or simulation state
-  const customerName = leadData?.customer_name || 'Alex Ubilla';
+  const customerName = leadData?.customer_name || 'Leonardo Da Vinci';
   const projectScope = leadData?.project_scope || 'Quartzite Kitchen Countertops';
   const materialPreference = leadData?.material_preference || 'Calacatta Quartzite';
   const formattedTime = leadData?.appointment_timestamp
@@ -131,8 +131,8 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
 
       {/* Footer Info */}
       <div className="mt-3 flex justify-between items-center text-[10px] text-gray-400 font-mono">
-        <span>Resend API Status: {process.env.RESEND_API_KEY ? 'CONNECTED' : 'SIMULATION MODE'}</span>
-        <span>To: {customerName.toLowerCase().replace(/\s+/g, '')}@example.com</span>
+        <span>Email Dispatch Status: {process.env.RESEND_API_KEY ? 'ACTIVE (RESEND)' : 'LOCAL SIMULATOR'}</span>
+        <span>Sandbox Inbox Viewport</span>
       </div>
     </div>
   );
