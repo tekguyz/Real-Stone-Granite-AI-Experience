@@ -177,19 +177,19 @@ export default function LiveActivityFeed({
             {connectionStatus === 'connected' && (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
-                <span className="text-gray-600 font-medium">Socket Active</span>
+                <span className="text-gray-600 font-medium">Showroom Linked</span>
               </>
             )}
             {connectionStatus === 'paused' && (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                <span className="text-gray-600 font-medium font-mono">Paused</span>
+                <span className="text-gray-600 font-medium">Paused</span>
               </>
             )}
             {connectionStatus === 'unconfigured' && (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span className="text-gray-600 font-medium">Demo Mode</span>
+                <span className="text-gray-600 font-medium">Showroom Simulator</span>
               </>
             )}
           </div>
@@ -241,8 +241,8 @@ export default function LiveActivityFeed({
                 className={`flex w-full ${alignment}`}
               >
                 {message.sender === 'system' ? (
-                  <div className="py-1 px-4 text-center text-gray-500 font-mono text-[11px]">
-                    Update: {message.text}
+                  <div className="py-1 px-4 text-center text-gray-500 text-[12px] font-sans">
+                    Showroom update: {message.text}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-1 max-w-[80%]">
@@ -281,10 +281,10 @@ export default function LiveActivityFeed({
           + Agent Response
         </button>
         <button
-          onClick={() => handleSimulateSentence('system', "CRM synced: customer name set to 'Leonardo', material set to 'Marble'")}
+          onClick={() => handleSimulateSentence('system', "customer name updated to 'Leonardo', material preference set to 'Marble'")}
           className="text-[11px] bg-white hover:bg-gray-50 text-gray-700 font-medium py-1 px-2.5 rounded-md border border-[var(--color-border-hairline)] shrink-0 transition-colors"
         >
-          + CRM Event
+          + Showroom Event
         </button>
         {isLive && (
           <button
