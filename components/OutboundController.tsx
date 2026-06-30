@@ -48,11 +48,12 @@ export default function OutboundController({ onCallInitiated }: OutboundControll
       const result = await triggerOutboundCall(values.phoneNumber);
 
       if (result.success) {
-        setSuccessMsg(result.message);
-        onCallInitiated?.(values.phoneNumber, result.callId);
+        setSuccessMsg('Outbound call successfully dispatched via Vapi.');
+        const callId = (result.data as any)?.id || `vapi-sim-${values.phoneNumber.replace(/\D/g, '')}`;
+        onCallInitiated?.(values.phoneNumber, callId);
         reset();
       } else {
-        setApiError(result.message || 'Call routing failed. Please check line parameters and retry.');
+        setApiError(result.error || 'Call routing failed. Please check line parameters and retry.');
       }
     } catch (err: any) {
       setApiError('Call routing failed. Please check line parameters and retry.');
