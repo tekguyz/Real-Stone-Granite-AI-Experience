@@ -1,63 +1,48 @@
+// app/actions/vapiOutbound.ts
 'use server';
 
-export async function triggerOutboundCall(phoneNumber: string) {
-  const vapiApiKey = process.env.VAPI_API_KEY;
-  const assistantId = '71038d0a-fde3-4c47-8def-cb03b26fa46e';
+export async function triggerOutboundCall(targetPhoneNumber: string) {
+  const apiKey = process.env.VAPI_API_KEY;
+  const assistantId = "71038d0a-fde3-4c47-8def-cb03b26fa46e";
+  const phoneNumberId = process.env.VAPI_PHONE_NUMBER_ID;
 
-  console.log(`[triggerOutboundCall] Initiating live outbound call to ${phoneNumber}`);
+  // Pre-flight assertion engine: Catches environment errors BEFORE hitting Vapi
+  if (!apiKey) {
+    console.error("CRITICAL: VAPI_API_KEY is undefined in the current server environment.");
+    return { success: false, error: "Server configuration error: Missing API authorization token." };
+  }
 
-  if (!vapiApiKey) {
-    console.warn(
-      'Warning: VAPI_API_KEY environment variable is missing. ' +
-      'Real-world telephony connections require this secret in your environment configuration. ' +
-      'Bypassing with a successful simulation response for the dashboard preview.'
-    );
-
-    // Simulate standard outbound trigger latency
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    return {
-      success: true,
-      mode: 'simulation',
-      message: 'Call simulated successfully. Use the mobile screen simulator to trigger full speech interaction cycles in real-time.',
-      callId: `sim-call-${Math.random().toString(36).substring(2, 11)}`,
-    };
+  if (!phoneNumberId) {
+    console.error("CRITICAL: VAPI_PHONE_NUMBER_ID is undefined in the current server environment.");
+    return { success: false, error: "Server configuration error: Missing outbound phone line identifier." };
   }
 
   try {
-    const response = await fetch('https://api.vapi.ai/call', {
-      method: 'POST',
+    const response = await fetch("https://api.vapi.ai/call", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${vapiApiKey}`,
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         assistantId: assistantId,
+        phoneNumberId: phoneNumberId, // Gracefully pulled from secure server environment
         customer: {
-          number: phoneNumber,
-        },
-      }),
+          number: targetPhoneNumber
+        }
+      })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      console.error('[triggerOutboundCall] Vapi API Error response:', data);
-      throw new Error(data.message || `HTTP error ${response.status}`);
+      console.error("Vapi API Refusal Payload:", data);
+      return { success: false, error: data.message || "Telephony provider routing failure." };
     }
 
-    return {
-      success: true,
-      mode: 'live',
-      message: 'Outbound call successfully dispatched via Vapi telephony network.',
-      callId: data.id || `vapi-${Math.random().toString(36).substring(2, 11)}`,
-      data,
-    };
+    return { success: true, data };
   } catch (error: any) {
-    console.error('[triggerOutboundCall] Call dispatch failed:', error);
-    return {
-      success: false,
-      message: error?.message || 'Call routing failed. Please check line parameters and retry.',
-    };
+    console.error("Low-Level Network Exception:", error.message);
+    return { success: false, error: error.message };
   }
 }
