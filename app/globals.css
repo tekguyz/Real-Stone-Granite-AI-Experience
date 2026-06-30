@@ -3,10 +3,15 @@
 @theme {
   --color-canvas: oklch(0.99 0.002 240);
   --color-primary: oklch(0.12 0.01 240);
+  --color-muted: oklch(0.50 0.01 240);
   --color-surface-card: oklch(0.98 0.003 240);
   --color-border-hairline: oklch(0.93 0.003 240);
-  --color-accent: oklch(0.65 0.16 150);
   
+  /* Financial Table Highlight Accents */
+  --color-highlight-bg: oklch(0.97 0.014 75);
+  --color-highlight-text: oklch(0.35 0.12 75);
+  --color-lost-text: oklch(0.40 0.13 20);
+
   --radius-md: 10px;
   --radius-lg: 16px;
 }
@@ -18,7 +23,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-weight: 600;
   letter-spacing: -0.04em;
 }
