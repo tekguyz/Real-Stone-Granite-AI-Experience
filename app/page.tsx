@@ -5,12 +5,14 @@ import LiveActivityFeed from '@/components/LiveActivityFeed';
 import DeviceSimulator from '@/components/DeviceSimulator';
 import EmailViewport from '@/components/EmailViewport';
 import OutboundController from '@/components/OutboundController';
+import WelcomeModal from '@/components/WelcomeModal';
 import { Database, User, Calendar, RefreshCw, FileText, CheckCircle, Flame, Layers, ShieldCheck } from 'lucide-react';
 
 export default function DashboardPage() {
   const [currentStatus, setCurrentStatus] = useState<string>('AWAITING_CALL');
   const [customEmailHtml, setCustomEmailHtml] = useState<string>('');
   const [activeMobileTab, setActiveMobileTab] = useState<'workspace' | 'device'>('workspace');
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
   const [leadData, setLeadData] = useState<any>({
     customer_name: '',
     customer_phone: '',
@@ -67,6 +69,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-[var(--color-canvas)] text-[var(--color-primary)]">
+      <WelcomeModal isOpen={isWelcomeModalOpen} onClose={() => setIsWelcomeModalOpen(false)} />
       {/* Global Navigation Header */}
       <header className="h-16 bg-white border-b border-[var(--color-border-hairline)] flex items-center justify-between px-6 shrink-0 z-20 shadow-xs">
         <div className="flex items-center gap-6">
@@ -267,10 +270,23 @@ export default function DashboardPage() {
       </main>
 
       {/* Corporate Footnotes */}
-      <footer className="border-t border-[var(--color-border-hairline)] py-8 text-center text-xs text-gray-400 bg-white shrink-0">
-        <p className="max-w-[1200px] mx-auto px-6 font-sans">
-          Real Stone & Granite Corp © {new Date().getFullYear()} • 32-Year Family Countertop Fabrication & Edge Treatment Specialists
-        </p>
+      <footer className="border-t border-[var(--color-border-hairline)] py-8 bg-white shrink-0">
+        <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400 font-sans">
+          <p>
+            Real Stone & Granite Corp © {new Date().getFullYear()} • Integrity • Quality • Craftsmanship
+          </p>
+          <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1 rounded-full text-[11px]">
+            <span className="text-gray-400 font-medium">Digital Craft by</span>
+            <a
+              href="https://tekguyz.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold text-gray-700 hover:text-black transition-colors"
+            >
+              TEKGUYZ
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
   );
