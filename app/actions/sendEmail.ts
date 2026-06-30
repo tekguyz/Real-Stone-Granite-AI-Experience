@@ -93,8 +93,10 @@ export async function sendAppointmentEmail(
 
   try {
     const resend = new Resend(apiKey);
+    const sender = process.env.RESEND_FROM_EMAIL || 'Real Stone & Granite <onboarding@resend.dev>';
+    
     const data = await resend.emails.send({
-      from: 'Real Stone & Granite <onboarding@resend.dev>',
+      from: sender,
       to: [toEmail],
       subject: 'Showroom Walkthrough & Template Session Confirmed',
       html: emailHtml,
