@@ -89,7 +89,7 @@ export default function DashboardPage() {
       </header>
 
       {/* Main Workspace Area */}
-      <main className="flex-1 w-full max-w-[1200px] mx-auto py-8 lg:py-12 px-6">
+      <main className="flex-1 w-full max-w-[1200px] mx-auto py-8 lg:py-12 px-4 sm:px-6">
         
         {/* Mobile Segmented Toggle Control (State-Preserving) */}
         <div className="block lg:hidden mb-6">
@@ -243,8 +243,8 @@ export default function DashboardPage() {
           <div className={`lg:col-span-5 flex-col gap-6 lg:gap-8 ${activeMobileTab === 'device' ? 'flex' : 'hidden lg:flex'}`}>
             
             {/* Smartphone Simulated Display */}
-            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 shadow-xs flex flex-col gap-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans">Simulated Client Smartphone</h3>
+            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 shadow-xs flex flex-col gap-3 items-center">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans self-start">Simulated Client Smartphone</h3>
               <DeviceSimulator
                 currentStatus={currentStatus}
                 onStatusChange={handleStatusChange}
@@ -255,7 +255,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Email Viewport */}
-            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 shadow-xs flex flex-col gap-3">
+            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 shadow-xs flex flex-col gap-3">
               <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans">Delivered Transactional Material</h3>
               <EmailViewport
                 currentStatus={currentStatus}
