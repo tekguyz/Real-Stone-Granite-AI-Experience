@@ -27,6 +27,7 @@ export default function DeviceSimulator({
   const [isCalling, setIsCalling] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [simStep, setSimStep] = useState(0);
+  const [chosenTimeSlot, setChosenTimeSlot] = useState<string>('');
 
   const showNotification = currentStatus === 'ANALYSIS_COMPLETE';
   const emailSentRef = useRef(false);
@@ -37,7 +38,7 @@ export default function DeviceSimulator({
       name,
       leadData.material_preference || 'Quartzite (Calacatta)',
       leadData.project_scope || 'Kitchen Countertop Fabrication',
-      leadData.appointment_timestamp || new Date(Date.now() + 86400000).toISOString()
+      leadData.appointment_timestamp || chosenTimeSlot || new Date(Date.now() + 86400000).toISOString()
     );
     if (response.success && response.html) {
       onEmailHtmlGenerated?.(response.html);
@@ -156,15 +157,17 @@ export default function DeviceSimulator({
     let updatedLeadData = { ...leadData };
     if (simStep === 2) {
       if (optionText.includes('10:00 AM')) {
+        setChosenTimeSlot('2026-06-30T10:00:00-07:00');
         updatedLeadData.appointment_timestamp = '2026-06-30T10:00:00-07:00';
       } else if (optionText.includes('2:00 PM')) {
+        setChosenTimeSlot('2026-07-01T14:00:00-07:00');
         updatedLeadData.appointment_timestamp = '2026-07-01T14:00:00-07:00';
       }
       onLeadCreateOrUpdate(updatedLeadData);
     }
 
     if (currentScript.triggerSchedule) {
-      const finalTimestamp = leadData.appointment_timestamp || updatedLeadData.appointment_timestamp || '2026-06-30T10:00:00-07:00';
+      const finalTimestamp = chosenTimeSlot || updatedLeadData.appointment_timestamp || leadData.appointment_timestamp || '2026-06-30T10:00:00-07:00';
       onLeadCreateOrUpdate({
         ...leadData,
         appointment_timestamp: finalTimestamp,
@@ -246,7 +249,7 @@ export default function DeviceSimulator({
                     Voice Agent Sarah
                   </h3>
                   <p className="text-xs text-gray-500 mt-1 px-4 leading-relaxed">
-                    Test the AI voice assistant pipeline on our simulated active phone line.
+                    Test the AI voice showroom experience on our simulated active phone line.
                   </p>
                 </div>
 
