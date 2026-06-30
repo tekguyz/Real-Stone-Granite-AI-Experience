@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Mail, Check, Calendar, ArrowRight, ShieldCheck, RefreshCw, Layers } from 'lucide-react';
+import React from 'react';
+import { Mail, ShieldCheck } from 'lucide-react';
 
 interface EmailViewportProps {
   currentStatus: string;
@@ -12,9 +12,6 @@ interface EmailViewportProps {
 export default function EmailViewport({ currentStatus, leadData, customEmailHtml }: EmailViewportProps) {
   const isScheduled = leadData?.appointment_timestamp || currentStatus === 'ANALYSIS_COMPLETE';
   const isCrmSynced = leadData?.current_status === 'MOCK_CRM_SYNCED' || currentStatus === 'MOCK_CRM_SYNCED';
-
-  // State to toggle between HTML Source View and Live Render view
-  const [activeTab, setActiveTab] = useState<'preview' | 'html'>('preview');
 
   // Generate fallback/mock HTML in case we are in setup or simulation state
   const customerName = leadData?.customer_name || 'Leonardo Da Vinci';
@@ -43,7 +40,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             ${isScheduled ? 'Walkthrough & Consultation Confirmed' : 'Quartzite Design Catalog & Brochure'}
           </h2>
           <p style="font-size: 13px; color: #6b7280; margin-bottom: 16px;">
-            30 Years of Premium Countertop Fabrication & Custom Edge Treatments
+            32 Years of Premium Countertop Fabrication & Custom Edge Treatments
           </p>
           <p style="font-size: 13px; line-height: 1.5; color: #374151;">
             Hi ${customerName}, ${
@@ -59,7 +56,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             <div style="font-size: 11px; color: #4b5563; margin-top: 2px;">Time: ${formattedTime}</div>
           </div>
           <div style="text-align: center; font-size: 10px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px;">
-            Real Stone & Granite Corp • 30-Year Family Specialists
+            Real Stone & Granite Corp • 32-Year Family Specialists
           </div>
         </div>
       </body>
@@ -67,7 +64,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
   `;
 
   return (
-    <div id="email-viewport-container" className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col h-[380px] justify-between">
+    <div id="email-viewport-container" className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col h-[380px] justify-between shadow-xs">
       {/* Email Client Top Bar Wrapper */}
       <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border-hairline)] mb-4">
         <div className="flex items-center gap-2">
@@ -76,63 +73,39 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b] opacity-80"></span>
             <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] opacity-80"></span>
           </div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 font-mono">
-            Verified Inbox Sandbox
+          <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 font-sans">
+            Client Inbox Viewport
           </span>
         </div>
-
-        {/* Tab Selection */}
-        <div className="flex bg-white rounded-md p-0.5 border border-[var(--color-border-hairline)]">
-          <button
-            onClick={() => setActiveTab('preview')}
-            className={`px-3 py-1 text-[11px] font-semibold rounded-sm transition-colors ${
-              activeTab === 'preview'
-                ? 'bg-[var(--color-primary)] text-white'
-                : 'text-gray-500 hover:text-gray-900'
-            }`}
-          >
-            Live Render
-          </button>
-          <button
-            onClick={() => setActiveTab('html')}
-            className={`px-3 py-1 text-[11px] font-semibold rounded-sm transition-colors ${
-              activeTab === 'html'
-                ? 'bg-[var(--color-primary)] text-white'
-                : 'text-gray-500 hover:text-gray-900'
-            }`}
-          >
-            HTML Source
-          </button>
+        <div className="flex items-center gap-1.5 text-xs text-[#10b981] font-semibold bg-green-50/80 px-2.5 py-1 rounded-full border border-green-100">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Real-time Sync</span>
         </div>
       </div>
 
-      {/* Main Sandbox Frame Rendering */}
+      {/* Main Frame Rendering */}
       <div className="flex-1 overflow-hidden bg-white border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] flex flex-col">
         {!isCrmSynced && !isScheduled ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-center p-6">
-            <Mail className="w-8 h-8 text-gray-300 mb-2 animate-bounce" />
+          <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-gray-50/50">
+            <Mail className="w-8 h-8 text-gray-300 mb-2" />
             <p className="text-xs text-gray-400 max-w-[280px] leading-relaxed">
-              Inbox empty. Advance the voice call simulation or request a walkthrough time to dispatch transactional HTML.
+              Waiting for customer interactions. Advancing the conversation will automatically dispatch transactional HTML briefings.
             </p>
           </div>
-        ) : activeTab === 'preview' ? (
+        ) : (
           <iframe
             id="email-preview-frame"
             srcDoc={generatedHtml}
             className="w-full h-full border-none"
             title="Transactional Email Preview"
           />
-        ) : (
-          <pre className="flex-1 p-4 overflow-auto text-[10px] font-mono text-gray-600 bg-gray-50 leading-relaxed select-all">
-            {generatedHtml.trim()}
-          </pre>
         )}
       </div>
 
       {/* Footer Info */}
-      <div className="mt-3 flex justify-between items-center text-[10px] text-gray-400 font-mono">
+      <div className="mt-3 flex justify-between items-center text-[10px] text-gray-400 font-sans">
         <span>Email Dispatch Status: {process.env.RESEND_API_KEY ? 'ACTIVE (RESEND)' : 'LOCAL SIMULATOR'}</span>
-        <span>Sandbox Inbox Viewport</span>
+        <span>Secure Showroom Mailer</span>
       </div>
     </div>
   );

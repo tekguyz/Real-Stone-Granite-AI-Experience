@@ -152,10 +152,22 @@ export default function DeviceSimulator({
       onStatusChange('MOCK_CRM_SYNCED');
     }
 
+    // Capture the dynamic appointment preference chosen in Step 2 instantly
+    let updatedLeadData = { ...leadData };
+    if (simStep === 2) {
+      if (optionText.includes('10:00 AM')) {
+        updatedLeadData.appointment_timestamp = '2026-06-30T10:00:00-07:00';
+      } else if (optionText.includes('2:00 PM')) {
+        updatedLeadData.appointment_timestamp = '2026-07-01T14:00:00-07:00';
+      }
+      onLeadCreateOrUpdate(updatedLeadData);
+    }
+
     if (currentScript.triggerSchedule) {
+      const finalTimestamp = leadData.appointment_timestamp || updatedLeadData.appointment_timestamp || '2026-06-30T10:00:00-07:00';
       onLeadCreateOrUpdate({
         ...leadData,
-        appointment_timestamp: '2026-06-30T10:00:00-07:00',
+        appointment_timestamp: finalTimestamp,
         current_status: 'ANALYSIS_COMPLETE',
       });
       onStatusChange('ANALYSIS_COMPLETE');
@@ -168,22 +180,24 @@ export default function DeviceSimulator({
     }
   };
 
+  const isWednesdaySelection = leadData?.appointment_timestamp?.includes('14:00') || leadData?.appointment_timestamp?.includes('2026-07-01');
+
   return (
-    <div id="device-simulator-container" className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col items-center relative overflow-hidden">
+    <div id="device-simulator-container" className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col items-center relative overflow-hidden shadow-xs">
       
-      {/* Slide-In Text Notification Alert Bubble (Spring Animation) */}
+      {/* Slide-Up Text Notification Alert Bubble (Physics Spring Animation) */}
       <AnimatePresence>
         {showNotification && (
           <motion.div
-            initial={{ y: -100, opacity: 0, scale: 0.9 }}
+            initial={{ y: 200, opacity: 0, scale: 0.95 }}
             animate={{
               y: 16,
               opacity: 1,
               scale: 1,
-              transition: { type: 'spring', stiffness: 300, damping: 20 }
+              transition: { type: 'spring', stiffness: 220, damping: 18 }
             }}
-            exit={{ y: -100, opacity: 0 }}
-            className="absolute top-0 z-50 w-[290px] bg-white/95 backdrop-blur-md border border-[var(--color-border-hairline)] rounded-xl shadow-lg p-3.5 flex gap-3"
+            exit={{ y: 150, opacity: 0 }}
+            className="absolute bottom-6 z-50 w-[290px] bg-white/95 backdrop-blur-md border border-[var(--color-border-hairline)] rounded-xl shadow-lg p-3.5 flex gap-3"
           >
             <div className="w-9 h-9 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center shrink-0">
               <MessageSquare className="w-4 h-4" />
@@ -194,7 +208,7 @@ export default function DeviceSimulator({
                 <span className="text-[9px] text-gray-400 font-mono">Just Now</span>
               </div>
               <p className="text-xs text-gray-600 mt-1 font-sans leading-relaxed">
-                Walkthrough appointment confirmed for tomorrow at 10:00 AM. Checklist sent to your email address!
+                Walkthrough appointment confirmed for {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
               </p>
             </div>
           </motion.div>

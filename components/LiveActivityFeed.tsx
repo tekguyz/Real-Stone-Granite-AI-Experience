@@ -40,7 +40,7 @@ export default function LiveActivityFeed({
         {
           id: 'init-1',
           sender: 'system',
-          text: 'Showroom Demonstration Sandbox is active. Voice transcriptions and real-time operations update below.',
+          text: 'Showroom Demonstration Workspace is active. Voice transcriptions and real-time operations update below.',
           timestamp: new Date(),
         },
         {
@@ -235,9 +235,9 @@ export default function LiveActivityFeed({
             return (
               <motion.div
                 key={message.id}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ type: 'spring', stiffness: 220, damping: 18 }}
                 className={`flex w-full ${alignment}`}
               >
                 {message.sender === 'system' ? (

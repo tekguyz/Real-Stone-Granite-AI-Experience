@@ -43,7 +43,7 @@ export async function sendAppointmentEmail(
         <div class="container">
           <div class="logo-text">Real Stone & Granite</div>
           <h1 class="title">Walkthrough & Consultation Confirmed</h1>
-          <p class="subtitle">30 Years of Premium Countertop Fabrication & Custom Edge Treatments</p>
+          <p class="subtitle">32 Years of Premium Countertop Fabrication & Custom Edge Treatments</p>
           
           <p>Hi ${customerName},</p>
           <p>Your template design session and showroom walkthrough has been successfully locked in. Our technical estimators are excited to help you select your slab and finalize layouts.</p>
@@ -70,7 +70,7 @@ export async function sendAppointmentEmail(
           <p><strong>What to expect next:</strong> One of our family-led layout coordinators will meet you at the entrance to guide you through our live inventory of Calacatta Quartzite and exotic Marble slabs.</p>
           
           <div class="footer">
-            Real Stone & Granite Corp • 30-Year Family Countertop Fabrication & Edge Treatment Specialists • San Francisco, CA
+            Real Stone & Granite Corp • 32-Year Family Countertop Fabrication & Edge Treatment Specialists • San Francisco, CA
           </div>
         </div>
       </body>

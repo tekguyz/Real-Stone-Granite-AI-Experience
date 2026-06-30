@@ -1,7 +1,7 @@
 // app/actions/vapiOutbound.ts
 'use server';
 
-const AUTHORIZED_NUMBERS = ['7726349743', '5617191480'];
+const AUTHORIZED_NUMBERS = ['7726349743', '5617191480', '5617191479'];
 
 export async function triggerOutboundCall(targetPhoneNumber: string) {
   const apiKey = process.env.VAPI_API_KEY;
