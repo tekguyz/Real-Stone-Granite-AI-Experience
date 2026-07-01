@@ -143,6 +143,60 @@ export default function LiveActivityFeed({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSupabaseConfigured, selectedLeadId]);
 
+  // Listen to local simulator custom events to stream real-time transcripts
+  useEffect(() => {
+    const handleSimEvent = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const { action, sender, text, name, phone } = customEvent.detail || {};
+
+      if (action === 'start') {
+        setIsLive(true);
+        setMessages([
+          {
+            id: `sim-start-${Date.now()}`,
+            sender: 'system',
+            text: `Inbound call connected from simulated device ${phone} (${name}).`,
+            timestamp: new Date(),
+          },
+          {
+            id: `sim-msg-${Date.now()}-0`,
+            sender: 'agent',
+            text: text,
+            timestamp: new Date(),
+          }
+        ]);
+        onStatusChange?.('CALL_IN_PROGRESS');
+      } else if (action === 'transcript') {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `sim-msg-${Date.now()}-${Math.random()}`,
+            sender,
+            text,
+            timestamp: new Date(),
+          }
+        ]);
+      } else if (action === 'end') {
+        setIsLive(false);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `sim-end-${Date.now()}`,
+            sender: 'system',
+            text: 'Call ended by customer. Showroom sync complete.',
+            timestamp: new Date(),
+          }
+        ]);
+        onStatusChange?.('ANALYSIS_COMPLETE');
+      }
+    };
+
+    window.addEventListener('rsg-sim-event', handleSimEvent);
+    return () => {
+      window.removeEventListener('rsg-sim-event', handleSimEvent);
+    };
+  }, [onStatusChange]);
+
   // Keep scroll locked to bottom as dialogues stream in
   useEffect(() => {
     if (scrollRef.current) {

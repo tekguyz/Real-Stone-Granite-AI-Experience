@@ -59,69 +59,69 @@ export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
 
           {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
-            <h2 className="text-lg sm:text-xl md:text-2xl font-sans font-bold tracking-tight text-[var(--color-primary)] mb-4 text-center sm:text-left">
-              Welcome to the Real Stone & Granite Assistant
+            <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-sans font-bold tracking-tight text-[var(--color-primary)] mb-4 text-center sm:text-left">
+              Welcome to the Real Stone & Granite Showroom Assistant
             </h2>
-            <p className="text-[13px] sm:text-[14px] text-[var(--color-primary)] opacity-85 leading-relaxed mb-4">
-              For over 30 years, our family-owned business has been fabricating custom stone countertops, elegant bath vanities, fireplaces, and architectural monuments here in Florida. Every customer inquiry is incredibly important to us. However, during busy showroom hours or late evenings when our offices are closed, it can be tough to answer every incoming call.
-            </p>
-            <p className="text-[13px] sm:text-[14px] text-[var(--color-primary)] opacity-85 leading-relaxed mb-6">
-              To make sure our customers are always taken care of, we created <strong>Sarah</strong>—our virtual after-hours receptionist. When our team is busy in the slab yard or away from the desk, Sarah answers immediately, greets callers warmly, guides them through our premium stone materials (Marble, Quartzite, Granite, Quartz), explains our 3D digital laser scanner measurements, and schedules showroom visits.
+            <p className="text-[14px] md:text-[15px] text-[var(--color-primary)] opacity-80 leading-relaxed mb-6 md:mb-8">
+              This system demonstrates how premium service providers and high-end trade businesses protect their revenue when their team cannot get to the phone. This system acts as an instant overflow and after-hours receptionist—answering seamlessly whenever your main line is busy or when an inquiry comes in after regular business hours—ensuring potential clients connect immediately instead of hanging up to call a competitor.
             </p>
 
-            <h3 className="text-sm sm:text-base font-sans font-semibold text-[var(--color-primary)] mb-3">
-              How Sarah Helps Our Customers
+            <h3 className="text-base md:text-lg font-sans font-semibold text-[var(--color-primary)] mb-4">
+              The Financial Reality: The True Cost of Missed Overflow Calls
             </h3>
             
-            <ul className="space-y-3 mb-6">
-              <li className="flex gap-2.5 text-xs sm:text-sm text-[var(--color-primary)]">
+            <ul className="space-y-4 mb-6 md:mb-8">
+              <li className="flex gap-3 text-sm text-[var(--color-primary)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-1.5 shrink-0" />
                 <p className="leading-relaxed opacity-90">
-                  <strong className="font-semibold opacity-100">Immediate Warm Welcome:</strong> Instead of getting an empty voicemail box or a busy signal, callers get an instant, polite, and helpful conversation.
+                  <strong className="font-semibold opacity-100">The Voicemail Wall:</strong> Industry data shows that small business operations miss an average of 22% to 62% of incoming phone calls during busy overflow periods or after-hours. 85% of high-intent consumers who encounter a standard recorded voicemail box hang up immediately without leaving a message.
                 </p>
               </li>
-              <li className="flex gap-2.5 text-xs sm:text-sm text-[var(--color-primary)]">
+              <li className="flex gap-3 text-sm text-[var(--color-primary)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-1.5 shrink-0" />
                 <p className="leading-relaxed opacity-90">
-                  <strong className="font-semibold opacity-100">Broad Stone Knowledge:</strong> Sarah understands custom slab pricing factors, can answer layout questions, and knows our premium inventory details.
+                  <strong className="font-semibold opacity-100">The Competitor Shift:</strong> 62% of those unanswered callers will instantly dial a competing service provider further down the page who answers live.
                 </p>
               </li>
-              <li className="flex gap-2.5 text-xs sm:text-sm text-[var(--color-primary)]">
+              <li className="flex gap-3 text-sm text-[var(--color-primary)]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] mt-1.5 shrink-0" />
                 <p className="leading-relaxed opacity-90">
-                  <strong className="font-semibold opacity-100">Seamless Follow-up:</strong> The moment a conversation ends, Sarah instantly schedules showroom walk-throughs in our system and dispatches customized material checklists directly to the client&apos;s inbox.
+                  <strong className="font-semibold opacity-100">The Speed-to-Lead Threshold:</strong> Homeowners and contractors buy from the first organization that answers their inquiry 78% of the time. Managing an inquiry within a 5-minute window increases your conversion probability by 100x relative to a response sent 30 minutes later.
                 </p>
               </li>
             </ul>
 
             <h3 className="text-xs md:text-sm font-semibold tracking-wider text-[var(--color-muted)] uppercase mb-3">
-              Humble and Human Impact
+              Financial Impact of Capturing 1 Missed Call Per Week
             </h3>
             
             <div className="border border-[var(--color-border-hairline)] rounded-xl overflow-x-auto mb-6">
-              <table className="w-full text-left text-xs md:text-sm whitespace-nowrap min-w-[320px]">
+              <table className="w-full text-left text-xs md:text-sm whitespace-nowrap min-w-[500px] sm:min-w-0">
                 <tbody className="divide-y divide-[var(--color-border-hairline)] font-sans">
                   <tr className="bg-white">
-                    <td className="p-3 pl-4 font-medium text-[var(--color-primary)]">Secured Bookings</td>
-                    <td className="p-3 text-[var(--color-muted)]">1 Showroom Walkthrough</td>
-                    <td className="p-3 pr-4 text-right text-[var(--color-muted)]">Warmly Welcomed</td>
+                    <td className="p-3 pl-4 font-medium text-[var(--color-primary)]">Weekly Baseline</td>
+                    <td className="p-3 text-[var(--color-muted)]">1 Phone Call</td>
+                    <td className="p-3 text-[var(--color-muted)]">—</td>
+                    <td className="p-3 pr-4 text-[var(--color-muted)] text-right">—</td>
                   </tr>
                   <tr className="bg-[var(--color-highlight-bg)] text-[var(--color-highlight-text)]">
-                    <td className="p-3 pl-4 font-semibold">Monthly Saved Inquiries</td>
-                    <td className="p-3">4 Guided Conversations</td>
-                    <td className="p-3 pr-4 font-bold text-right text-emerald-700">1 Saved Custom Project</td>
+                    <td className="p-3 pl-4 font-semibold">Monthly Horizon</td>
+                    <td className="p-3">4 Phone Calls</td>
+                    <td className="p-3">1 Secured Project</td>
+                    <td className="p-3 pr-4 font-bold text-right">$7,500</td>
                   </tr>
                   <tr className="bg-white">
-                    <td className="p-3 pl-4 font-medium text-[var(--color-primary)]">Yearly Community Results</td>
-                    <td className="p-3 text-[var(--color-muted)]">12 Crafted Kitchens & Baths</td>
-                    <td className="p-3 pr-4 font-bold text-emerald-800 text-right">12 Happy Families</td>
+                    <td className="p-3 pl-4 font-medium text-[var(--color-primary)]">Annual Aggregation</td>
+                    <td className="p-3 text-[var(--color-muted)]">52 Phone Calls</td>
+                    <td className="p-3 text-[var(--color-muted)]">13 Secured Projects</td>
+                    <td className="p-3 pr-4 font-bold text-[var(--color-lost-text)] text-right">$97,500</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             <p className="text-xs md:text-sm text-[var(--color-primary)] opacity-80 leading-relaxed italic bg-gray-50 border border-[var(--color-border-hairline)] p-4 rounded-lg">
-              <strong className="font-semibold not-italic opacity-100">The Bottom Line:</strong> Helping just one extra custom fabrication customer each month covers Sarah&apos;s support indefinitely, letting our team focus on our handcraft in the yard while ensuring new families always receive our warmest signature experience.
+              <strong className="font-semibold not-italic opacity-100">The Bottom Line:</strong> Successfully capturing just one additional high-value project per month completely covers the operational layout of the system, turning a frustrating communication bottleneck straight into guaranteed, hands-free business growth.
             </p>
           </div>
 

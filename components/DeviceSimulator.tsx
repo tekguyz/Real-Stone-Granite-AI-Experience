@@ -88,11 +88,32 @@ export default function DeviceSimulator({
       material_preference: 'Awaiting preference...',
     };
     onLeadCreateOrUpdate(initialLead);
+
+    // Dispatch custom event to notify LiveActivityFeed of the start of the simulated call
+    window.dispatchEvent(
+      new CustomEvent('rsg-sim-event', {
+        detail: {
+          action: 'start',
+          name: name || 'Leonardo Da Vinci',
+          phone: phone || '(415) 555-2673',
+          text: simulationScript[0].agent,
+        },
+      })
+    );
   };
 
   const handleEndCall = () => {
     setIsCalling(false);
     onStatusChange('ANALYSIS_COMPLETE');
+
+    // Dispatch custom event to notify LiveActivityFeed that the call has ended
+    window.dispatchEvent(
+      new CustomEvent('rsg-sim-event', {
+        detail: {
+          action: 'end',
+        },
+      })
+    );
   };
 
   // High-fidelity speech dialogue sequence
@@ -141,6 +162,17 @@ export default function DeviceSimulator({
   const handleOptionSelect = (optionText: string) => {
     const currentScript = simulationScript[simStep];
     
+    // Dispatch customer message immediately to Live Conversation Feed
+    window.dispatchEvent(
+      new CustomEvent('rsg-sim-event', {
+        detail: {
+          action: 'transcript',
+          sender: 'customer',
+          text: optionText,
+        },
+      })
+    );
+
     if (currentScript.triggerCRM) {
       onLeadCreateOrUpdate({
         ...leadData,
@@ -151,6 +183,19 @@ export default function DeviceSimulator({
         current_status: 'MOCK_CRM_SYNCED',
       });
       onStatusChange('MOCK_CRM_SYNCED');
+
+      // Dispatch a helpful sync system notification
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent('rsg-sim-event', {
+            detail: {
+              action: 'transcript',
+              sender: 'system',
+              text: `StoneWorks CRM Synced: scope set to '${currentScript.triggerCRM.projectType}' and preference set to '${currentScript.triggerCRM.materialClass}'.`,
+            },
+          })
+        );
+      }, 250);
     }
 
     // Capture the dynamic appointment preference chosen in Step 2 instantly
@@ -177,7 +222,21 @@ export default function DeviceSimulator({
     }
 
     if (simStep < simulationScript.length - 1) {
-      setSimStep((prev) => prev + 1);
+      const nextStepIndex = simStep + 1;
+      setSimStep(nextStepIndex);
+
+      // Dispatch Sarah's response after a slight delay for a highly realistic voice interaction feel
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent('rsg-sim-event', {
+            detail: {
+              action: 'transcript',
+              sender: 'agent',
+              text: simulationScript[nextStepIndex].agent,
+            },
+          })
+        );
+      }, 700);
     } else {
       handleEndCall();
     }
@@ -214,7 +273,7 @@ export default function DeviceSimulator({
                   <span className="text-[8px] text-gray-400 font-mono">Just Now</span>
                 </div>
                 <p className="text-[10px] sm:text-[11px] text-gray-200 mt-0.5 font-sans leading-relaxed">
-                  Walkthrough appointment confirmed with Real Stone for {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
+                  Walkthrough appointment confirmed on {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
                 </p>
               </div>
             </motion.div>
@@ -243,7 +302,7 @@ export default function DeviceSimulator({
               >
                 <div className="space-y-6 pt-4">
                   <div className="text-center pt-2">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                       Live Simulation Line
                     </span>
                     <h3 className="text-2xl font-bold tracking-tight text-gray-900 mt-4">
@@ -309,7 +368,7 @@ export default function DeviceSimulator({
                   onClick={handleStartCall}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-[var(--radius-lg)] text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md mt-auto mb-4"
                 >
-                  <Phone className="w-4 h-4 fill-white text-emerald-600" /> Start Inbound Call
+                  <Phone className="w-4 h-4 fill-white stroke-white" /> Start Inbound Call
                 </button>
               </motion.div>
             ) : (
@@ -318,64 +377,66 @@ export default function DeviceSimulator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col justify-between py-1.5 sm:py-3 overflow-y-auto pr-0.5 scrollbar-thin"
+                className="flex-1 flex flex-col justify-between py-1 sm:py-2.5 overflow-y-auto pr-0.5 scrollbar-thin"
               >
                 {/* Active Call Header */}
-                <div className="text-center shrink-0 space-y-1">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center mx-auto mb-1 shadow-sm">
-                    <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 animate-pulse fill-emerald-50" />
+                <div className="text-center shrink-0 space-y-0.5">
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 bg-emerald-50 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-1 shadow-xs">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700 animate-pulse fill-emerald-100" />
                   </div>
-                  <h4 className="text-sm sm:text-base font-bold text-gray-900">{name || 'Interested Customer'}</h4>
-                  <span className="text-[10px] text-gray-400 block font-mono bg-gray-100/80 px-2 py-0.5 rounded-full w-fit mx-auto">{phone}</span>
-                  <span className="text-xs sm:text-sm font-extrabold text-emerald-600 tracking-widest uppercase mt-0.5 block">
+                  <h4 className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">{name || 'Interested Customer'}</h4>
+                  <span className="text-[9px] text-gray-400 block font-mono bg-gray-100/80 px-1.5 py-0.2 rounded-full w-fit mx-auto">{phone}</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase mt-0.5 block">
                     {formatDuration(callDuration)}
                   </span>
                 </div>
 
                 {/* Simulated AI Agent Response options */}
-                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-2.5 sm:p-3 my-1.5 sm:my-2.5 flex-1 flex flex-col justify-between min-h-0 overflow-hidden">
-                  <div className="flex-1 flex flex-col justify-center text-center p-1 mb-2 overflow-y-auto min-h-[50px] sm:min-h-[70px]">
-                    <span className="text-[10px] uppercase font-extrabold tracking-widest text-emerald-600 block mb-1">
+                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-2 sm:p-2.5 my-1 sm:my-1.5 flex-1 flex flex-col justify-between min-h-0 overflow-hidden">
+                  <div className="flex-1 flex flex-col justify-center text-center p-0.5 mb-1.5 overflow-y-auto min-h-[40px] sm:min-h-[50px]">
+                    <span className="text-[9px] uppercase font-bold tracking-wider text-emerald-800 block mb-0.5">
                       Sarah (Voice Assistant)
                     </span>
-                    <p className="text-[11px] sm:text-xs text-gray-800 font-sans leading-relaxed font-semibold">
+                    <p className="text-[10px] min-[360px]:text-[11px] sm:text-xs text-gray-800 font-sans leading-relaxed font-semibold px-1">
                       &ldquo;{simulationScript[simStep].agent}&rdquo;
                     </p>
                   </div>
 
-                  <div className="space-y-1.5 shrink-0">
-                    <span className="text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-0.5">
+                  <div className="space-y-1 shrink-0">
+                    <span className="text-[8px] sm:text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-0.5">
                       Respond as Caller:
                     </span>
-                    {simulationScript[simStep].options.map((opt, i) => (
-                      <button
-                        key={i}
-                        onClick={() => handleOptionSelect(opt)}
-                        className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] py-1.5 sm:py-2 px-2.5 sm:px-3 text-[10px] sm:text-[11px] font-sans font-semibold text-gray-700 transition-all shadow-xs h-auto leading-tight active:scale-[0.98]"
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    <div className="max-h-[145px] overflow-y-auto pr-0.5 space-y-1">
+                      {simulationScript[simStep].options.map((opt, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleOptionSelect(opt)}
+                          className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] py-1 sm:py-1.5 px-2 sm:px-2.5 text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] font-sans font-semibold text-gray-700 transition-all shadow-xs h-auto leading-tight active:scale-[0.98]"
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
                 {/* Call Action Triggers */}
-                <div className="flex justify-center gap-8 pb-1 sm:pb-2 shrink-0">
+                <div className="flex justify-center gap-6 pb-0.5 sm:pb-1 shrink-0">
                   <div className="flex flex-col items-center">
-                    <button className="w-10 h-10 sm:w-11 sm:h-11 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
-                      <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <button className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
+                      <Mic className="w-4 h-4" />
                     </button>
-                    <span className="text-[9px] sm:text-[10px] text-gray-500 font-semibold mt-1">Mute</span>
+                    <span className="text-[8px] sm:text-[9px] text-gray-500 font-semibold mt-0.5">Mute</span>
                   </div>
 
                   <div className="flex flex-col items-center">
                     <button
                       onClick={handleEndCall}
-                      className="w-10 h-10 sm:w-11 sm:h-11 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-md"
+                      className="w-9 h-9 sm:w-10 sm:h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-md"
                     >
-                      <PhoneOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <PhoneOff className="w-4 h-4" />
                     </button>
-                    <span className="text-[9px] sm:text-[10px] text-red-600 font-bold mt-1">End</span>
+                    <span className="text-[8px] sm:text-[9px] text-red-600 font-bold mt-0.5">End</span>
                   </div>
                 </div>
               </motion.div>
