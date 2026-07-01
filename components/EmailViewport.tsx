@@ -196,13 +196,13 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
           <div className="flex gap-1.5 mr-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444] opacity-80"></span>
             <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b] opacity-80"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] opacity-80"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-success-solid opacity-80"></span>
           </div>
           <span className="text-xs font-bold uppercase tracking-wider text-gray-500 font-sans whitespace-nowrap">
             {"Customer's Inbox"}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-[#10b981] font-bold bg-green-50 px-2.5 py-1 rounded-full border border-green-100 shrink-0 whitespace-nowrap">
+        <div className="flex items-center gap-1.5 text-xs text-success-text font-bold bg-success-bg px-2.5 py-1 rounded-full border border-success-border shrink-0 whitespace-nowrap">
           <ShieldCheck className="w-3.5 h-3.5 animate-pulse" />
           <span>Demo Mode</span>
         </div>

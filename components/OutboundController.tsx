@@ -125,7 +125,7 @@ export default function OutboundController({ onCallInitiated }: OutboundControll
           )}
 
           {successMsg && (
-            <p className="text-xs text-green-600 font-medium flex items-center gap-1 mt-1 bg-green-50 p-2 rounded-md border border-green-100">
+            <p className="text-xs text-success-text font-medium flex items-center gap-1 mt-1 bg-success-bg p-2 rounded-md border border-success-border">
               <CheckCircle className="w-3.5 h-3.5 shrink-0" />
               {successMsg}
             </p>

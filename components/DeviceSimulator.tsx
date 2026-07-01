@@ -264,7 +264,7 @@ export default function DeviceSimulator({
               exit={{ y: -120, opacity: 0 }}
               className="absolute top-0 left-2 right-2 z-50 bg-gray-900/95 backdrop-blur-md border border-gray-800 rounded-xl shadow-lg p-3 flex gap-2.5 max-w-[calc(100%-16px)] mx-auto"
             >
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-success-solid text-white flex items-center justify-center shrink-0 shadow-sm">
                 <MessageSquare className="w-4 h-4 fill-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -273,7 +273,7 @@ export default function DeviceSimulator({
                   <span className="text-[8px] text-gray-400 font-mono">Just Now</span>
                 </div>
                 <p className="text-[10px] sm:text-[11px] text-gray-200 mt-0.5 font-sans leading-relaxed">
-                  Walkthrough appointment confirmed on {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
+                  Walkthrough appointment confirmed for {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
                 </p>
               </div>
             </motion.div>
@@ -302,7 +302,7 @@ export default function DeviceSimulator({
               >
                 <div className="space-y-6 pt-4">
                   <div className="text-center pt-2">
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-success-text bg-success-bg px-2.5 py-1 rounded-full border border-success-border">
                       Live Simulation Line
                     </span>
                     <h3 className="text-2xl font-bold tracking-tight text-gray-900 mt-4">
@@ -366,7 +366,7 @@ export default function DeviceSimulator({
 
                 <button
                   onClick={handleStartCall}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-[var(--radius-lg)] text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md mt-auto mb-4"
+                  className="w-full bg-success-solid hover:bg-success-solid-hover text-white py-3.5 rounded-[var(--radius-lg)] text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md mt-auto mb-4"
                 >
                   <Phone className="w-4 h-4 fill-white stroke-white" /> Start Inbound Call
                 </button>
@@ -381,12 +381,12 @@ export default function DeviceSimulator({
               >
                 {/* Active Call Header */}
                 <div className="text-center shrink-0 space-y-0.5">
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 bg-emerald-50 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-1 shadow-xs">
-                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-700 animate-pulse fill-emerald-100" />
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 bg-success-solid rounded-full flex items-center justify-center mx-auto mb-1 shadow-sm">
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse fill-white stroke-white" />
                   </div>
                   <h4 className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">{name || 'Interested Customer'}</h4>
                   <span className="text-[9px] text-gray-400 block font-mono bg-gray-100/80 px-1.5 py-0.2 rounded-full w-fit mx-auto">{phone}</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-emerald-700 tracking-wider uppercase mt-0.5 block">
+                  <span className="text-[11px] sm:text-xs font-bold text-success-text tracking-wider uppercase mt-0.5 block">
                     {formatDuration(callDuration)}
                   </span>
                 </div>
@@ -394,7 +394,7 @@ export default function DeviceSimulator({
                 {/* Simulated AI Agent Response options */}
                 <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-2 sm:p-2.5 my-1 sm:my-1.5 flex-1 flex flex-col justify-between min-h-0 overflow-hidden">
                   <div className="flex-1 flex flex-col justify-center text-center p-0.5 mb-1.5 overflow-y-auto min-h-[40px] sm:min-h-[50px]">
-                    <span className="text-[9px] uppercase font-bold tracking-wider text-emerald-800 block mb-0.5">
+                    <span className="text-[9px] uppercase font-bold tracking-wider text-success-text block mb-0.5">
                       Sarah (Voice Assistant)
                     </span>
                     <p className="text-[10px] min-[360px]:text-[11px] sm:text-xs text-gray-800 font-sans leading-relaxed font-semibold px-1">

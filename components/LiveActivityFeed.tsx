@@ -230,7 +230,7 @@ export default function LiveActivityFeed({
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-[var(--color-border-hairline)] text-[10px]">
             {connectionStatus === 'connected' && (
               <>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-success-solid"></span>
                 <span className="text-gray-600 font-medium">Showroom Linked</span>
               </>
             )}
@@ -251,8 +251,8 @@ export default function LiveActivityFeed({
 
         {isLive && (
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
-            <span className="text-xs font-semibold text-[#10b981] uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-success-solid animate-pulse"></span>
+            <span className="text-xs font-semibold text-success-text uppercase tracking-wider">
               Call Active
             </span>
           </div>

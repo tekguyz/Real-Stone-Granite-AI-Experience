@@ -10,7 +10,14 @@
   /* Financial Table Highlight Accents */
   --color-highlight-bg: oklch(0.97 0.014 75);
   --color-highlight-text: oklch(0.35 0.12 75);
-  --color-lost-text: oklch(0.40 0.13 20);
+  --color-lost-text: oklch(0.55 0.22 25);
+
+  /* Unified Success Greens */
+  --color-success-bg: oklch(0.97 0.015 149.21);
+  --color-success-border: oklch(0.92 0.04 149.21);
+  --color-success-text: oklch(0.37 0.14 149.21);
+  --color-success-solid: oklch(0.627 0.194 149.21);
+  --color-success-solid-hover: oklch(0.52 0.19 149.21);
 
   --radius-md: 10px;
   --radius-lg: 16px;
