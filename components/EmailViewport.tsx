@@ -204,7 +204,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
         </div>
         <div className="flex items-center gap-1.5 text-xs text-[#10b981] font-bold bg-green-50 px-2.5 py-1 rounded-full border border-green-100 shrink-0 whitespace-nowrap">
           <ShieldCheck className="w-3.5 h-3.5 animate-pulse" />
-          <span>Simulation Mode</span>
+          <span>Demo Mode</span>
         </div>
       </div>
 
