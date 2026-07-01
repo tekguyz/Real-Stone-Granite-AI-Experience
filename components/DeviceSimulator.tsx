@@ -219,7 +219,7 @@ export default function DeviceSimulator({
       </AnimatePresence>
 
       {/* Sleek, Minimal Smartphone Framework */}
-      <div className="w-full max-w-[310px] sm:max-w-[320px] h-[560px] sm:h-[580px] bg-white rounded-[32px] shadow-lg border-8 border-gray-900 p-4 relative flex flex-col overflow-hidden">
+      <div className="w-full max-w-[310px] sm:max-w-[320px] h-[610px] sm:h-[630px] bg-white rounded-[32px] shadow-lg border-8 border-gray-900 p-4 relative flex flex-col overflow-hidden">
         {/* Dynamic status bar */}
         <div className="flex justify-between items-center px-4 py-1 text-[11px] font-sans font-semibold text-gray-500 select-none">
           <span>11:44 AM</span>
@@ -316,40 +316,40 @@ export default function DeviceSimulator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col justify-between py-2"
+                className="flex-1 flex flex-col justify-between py-0.5"
               >
                 {/* Active Call Header */}
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Phone className="w-7 h-7 text-green-600 animate-bounce" />
+                <div className="text-center shrink-0">
+                  <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-1 shadow-xs">
+                    <Phone className="w-4 h-4 text-green-600 animate-bounce" />
                   </div>
-                  <h4 className="text-lg font-sans font-semibold text-gray-900">{name || 'Interested Customer'}</h4>
-                  <span className="text-xs text-gray-500 block font-mono">{phone}</span>
-                  <span className="text-xs font-semibold text-green-600 tracking-wider uppercase mt-1 block">
+                  <h4 className="text-sm font-sans font-semibold text-gray-900">{name || 'Interested Customer'}</h4>
+                  <span className="text-[9px] text-gray-400 block font-mono">{phone}</span>
+                  <span className="text-[11px] font-semibold text-green-600 tracking-wider uppercase mt-0.5 block">
                     {formatDuration(callDuration)}
                   </span>
                 </div>
 
                 {/* Simulated AI Agent Response options */}
-                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 my-4 flex-1 flex flex-col justify-between">
-                  <div className="flex-1 flex flex-col justify-center text-center p-1 mb-2">
-                    <span className="text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-1">
+                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-2 my-1.5 flex-1 flex flex-col justify-between min-h-0 overflow-hidden">
+                  <div className="flex-1 flex flex-col justify-center text-center p-0.5 mb-1.5 overflow-y-auto min-h-[60px]">
+                    <span className="text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-0.5">
                       Sarah (Voice Assistant)
                     </span>
-                    <p className="text-[12px] text-gray-800 font-sans leading-relaxed">
+                    <p className="text-[11px] text-gray-800 font-sans leading-relaxed">
                       &ldquo;{simulationScript[simStep].agent}&rdquo;
                     </p>
                   </div>
 
-                  <div className="space-y-2">
-                    <span className="text-[9px] uppercase font-bold tracking-widest text-gray-400 block">
+                  <div className="space-y-1 shrink-0">
+                    <span className="text-[8.5px] uppercase font-bold tracking-widest text-gray-400 block mb-0.5">
                       Respond as Caller:
                     </span>
                     {simulationScript[simStep].options.map((opt, i) => (
                       <button
                         key={i}
                         onClick={() => handleOptionSelect(opt)}
-                        className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] p-2 text-[11px] font-sans font-medium text-gray-700 transition-colors"
+                        className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] py-1 px-2 text-[10px] font-sans font-medium text-gray-700 transition-colors shadow-xs line-clamp-2"
                       >
                         {opt}
                       </button>
@@ -358,22 +358,22 @@ export default function DeviceSimulator({
                 </div>
 
                 {/* Call Action Triggers */}
-                <div className="flex justify-center gap-6 pb-2 shrink-0">
+                <div className="flex justify-center gap-5 pb-1 shrink-0">
                   <div className="flex flex-col items-center">
-                    <button className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
-                      <Mic className="w-5 h-5" />
+                    <button className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
+                      <Mic className="w-4 h-4" />
                     </button>
-                    <span className="text-[10px] text-gray-400 mt-1">Mute</span>
+                    <span className="text-[9px] text-gray-400 mt-0.5">Mute</span>
                   </div>
 
                   <div className="flex flex-col items-center">
                     <button
                       onClick={handleEndCall}
-                      className="w-12 h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors"
+                      className="w-10 h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-sm"
                     >
-                      <PhoneOff className="w-5 h-5" />
+                      <PhoneOff className="w-4 h-4" />
                     </button>
-                    <span className="text-[10px] text-red-600 font-semibold mt-1">End</span>
+                    <span className="text-[9px] text-red-600 font-semibold mt-0.5">End</span>
                   </div>
                 </div>
               </motion.div>

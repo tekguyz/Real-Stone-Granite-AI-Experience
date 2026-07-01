@@ -144,7 +144,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             ${isScheduled ? 'Walkthrough &amp; Consultation Confirmed' : 'Quartzite Design Catalog &amp; Brochure'}
           </h2>
           <p class="subtitle">
-            Integrity • Quality • Craftsmanship
+            <span class="nowrap">Integrity • Quality • Craftsmanship</span>
           </p>
           <p style="font-size: 13px; line-height: 1.5; color: #374151; margin: 0 0 12px 0;">
             Hi ${customerName},
@@ -181,8 +181,8 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             </table>
           </div>
           <div class="footer">
-            <span class="nowrap">Real Stone &amp; Granite</span> • Integrity • Quality • Craftsmanship<br>
-            427 S. Market Ave, Fort Pierce, FL • (772) 489-9964
+            <span class="nowrap">Real Stone &amp; Granite</span> • <span class="nowrap">Integrity • Quality • Craftsmanship</span><br>
+            <span class="nowrap">427 S. Market Ave, Fort Pierce, FL</span> • <span class="nowrap">(772) 489-9964</span>
           </div>
         </div>
       </body>
@@ -205,7 +205,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
         </div>
         <div className="flex items-center gap-1.5 text-xs text-[#10b981] font-semibold bg-green-50/80 px-2.5 py-1 rounded-full border border-green-100 shrink-0 whitespace-nowrap">
           <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Live Sync</span>
+          <span>Active</span>
         </div>
       </div>
 
@@ -215,7 +215,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
           <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-gray-50/50">
             <Mail className="w-8 h-8 text-gray-300 mb-2" />
             <p className="text-xs text-gray-400 max-w-[280px] leading-relaxed">
-              Waiting for customer interactions. Advancing the conversation will automatically dispatch transactional HTML briefings.
+              {"Once an appointment is booked or a material preference is selected during the conversation, the customer's design preference brochure and booking confirmation will be displayed here."}
             </p>
           </div>
         ) : (
@@ -230,8 +230,8 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
 
       {/* Footer Info */}
       <div className="mt-3 flex justify-between items-center text-[10px] text-gray-400 font-sans">
-        <span>Email Dispatch Status: {process.env.RESEND_API_KEY ? 'ACTIVE (RESEND)' : 'LOCAL SIMULATOR'}</span>
-        <span>Secure Showroom Mailer</span>
+        <span>Delivery Mode: {process.env.RESEND_API_KEY ? 'Resend Live Email Service' : 'Simulated Live Delivery'}</span>
+        <span>Customer Notification System</span>
       </div>
     </div>
   );

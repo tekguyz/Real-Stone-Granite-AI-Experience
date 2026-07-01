@@ -44,7 +44,7 @@ export async function sendAppointmentEmail(
         <div class="container">
           <div class="logo-text"><span class="nowrap">Real Stone &amp; Granite</span></div>
           <h1 class="title">Walkthrough &amp; Consultation Confirmed</h1>
-          <p class="subtitle">Integrity • Quality • Craftsmanship</p>
+          <p class="subtitle"><span class="nowrap">Integrity • Quality • Craftsmanship</span></p>
           
           <p>Hi ${customerName},</p>
           <p>Your template design session and showroom walkthrough has been successfully locked in. Our technical estimators are excited to help you select your slab and finalize layouts.</p>
@@ -77,8 +77,8 @@ export async function sendAppointmentEmail(
           <p><strong>What to expect next:</strong> One of our experienced layout coordinators will meet you at the showroom entrance to guide you through our live inventory of premium slabs.</p>
           
           <div class="footer">
-            <span class="nowrap">Real Stone &amp; Granite</span> • Integrity • Quality • Craftsmanship<br>
-            427 S. Market Ave, Fort Pierce, FL • Phone: (772) 489-9964
+            <span class="nowrap">Real Stone &amp; Granite</span> • <span class="nowrap">Integrity • Quality • Craftsmanship</span><br>
+            <span class="nowrap">427 S. Market Ave, Fort Pierce, FL</span> • <span class="nowrap">Phone: (772) 489-9964</span>
           </div>
         </div>
       </body>

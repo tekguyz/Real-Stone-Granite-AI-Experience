@@ -40,13 +40,13 @@ export default function LiveActivityFeed({
         {
           id: 'init-1',
           sender: 'system',
-          text: 'Showroom Demonstration Workspace is active. Voice transcriptions and real-time operations update below.',
+          text: 'Showroom Assistant is active and ready. Real-time call logs and status will display below.',
           timestamp: new Date(),
         },
         {
           id: 'init-2',
           sender: 'agent',
-          text: 'Hello! I am Sarah, your AI Voice Assistant for Real Stone & Granite. Start a call from the interactive phone on the right to test me!',
+          text: 'Hello! I am Sarah, your voice assistant for Real Stone & Granite. Start a call from the customer phone simulator on the right to try it out!',
           timestamp: new Date(),
         },
       ];
@@ -171,7 +171,7 @@ export default function LiveActivityFeed({
       <div className="flex items-center justify-between pb-4 border-b border-[var(--color-border-hairline)] mb-4">
         <div className="flex items-center gap-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-            Dialogue Stream
+            Live Conversation
           </span>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white border border-[var(--color-border-hairline)] text-[10px]">
             {connectionStatus === 'connected' && (
@@ -189,7 +189,7 @@ export default function LiveActivityFeed({
             {connectionStatus === 'unconfigured' && (
               <>
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                <span className="text-gray-600 font-medium">Showroom Simulator</span>
+                <span className="text-gray-600 font-medium">Local Simulator</span>
               </>
             )}
           </div>
@@ -213,7 +213,7 @@ export default function LiveActivityFeed({
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-4">
             <p className="text-sm text-gray-400">
-              No dialog logs recorded yet. Place an interactive call to observe transcription.
+              No active logs yet. Start a call with the virtual assistant to view the transcript.
             </p>
           </div>
         ) : (
@@ -242,7 +242,7 @@ export default function LiveActivityFeed({
               >
                 {message.sender === 'system' ? (
                   <div className="py-1 px-4 text-center text-gray-500 text-[12px] font-sans">
-                    Showroom update: {message.text}
+                    Update: {message.text}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-1 max-w-[80%]">
@@ -284,7 +284,7 @@ export default function LiveActivityFeed({
           onClick={() => handleSimulateSentence('system', "customer name updated to 'Leonardo', material preference set to 'Marble'")}
           className="text-[11px] bg-white hover:bg-gray-50 text-gray-700 font-medium py-1 px-2.5 rounded-md border border-[var(--color-border-hairline)] shrink-0 transition-colors"
         >
-          + Showroom Event
+          + Showroom Update
         </button>
         {isLive && (
           <button

@@ -43,13 +43,13 @@ export default function DashboardPage() {
       case 'MOCK_CRM_SYNCED':
         return (
           <span className="px-3 py-1 text-xs font-bold rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-sans">
-            CRM Live Synced
+            Saved to Profile
           </span>
         );
       case 'ANALYSIS_COMPLETE':
         return (
           <span className="px-3 py-1 text-xs font-bold rounded-full bg-green-50 text-green-700 border border-green-200 font-sans">
-            Briefing Dispatched
+            Checklist Sent
           </span>
         );
       case 'HUMAN_ESCALATION_REQUIRED':
@@ -61,7 +61,7 @@ export default function DashboardPage() {
       default:
         return (
           <span className="px-3 py-1 text-xs font-bold rounded-full bg-gray-100 text-gray-600 border border-gray-200 font-sans">
-            Agent Standby
+            Ready on Standby
           </span>
         );
     }
@@ -74,7 +74,7 @@ export default function DashboardPage() {
       <header className="h-16 bg-white border-b border-[var(--color-border-hairline)] flex items-center justify-between px-6 shrink-0 z-20 shadow-xs">
         <div className="flex items-center gap-6">
           <h1 className="text-xl font-bold tracking-tight text-gray-900 select-none flex items-center gap-2">
-            Real Stone & Granite <span className="text-gray-400 font-normal">|</span> <span className="text-gray-600 font-medium text-base font-sans">Front Desk Workspace</span>
+            Real Stone & Granite <span className="text-gray-400 font-normal">|</span> <span className="text-gray-600 font-medium text-base font-sans">Showroom Dashboard</span>
           </h1>
           <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-100">
             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
@@ -102,7 +102,7 @@ export default function DashboardPage() {
                   : 'text-gray-500 hover:text-gray-900'
               }`}
             >
-              Active Workspace
+              Call Logs & Info
             </button>
             <button
               onClick={() => setActiveMobileTab('device')}
@@ -112,7 +112,7 @@ export default function DashboardPage() {
                   : 'text-gray-500 hover:text-gray-900'
               }`}
             >
-              Simulated Client
+              Customer Phone
             </button>
           </div>
         </div>
@@ -126,8 +126,8 @@ export default function DashboardPage() {
             {/* Outbound Controller */}
             <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 shadow-xs flex flex-col gap-4">
               <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 font-sans">Dispatch Connection</h3>
-                <p className="text-xs text-gray-500 mt-1">Initiate a live phone interaction with the showroom voice specialist.</p>
+                <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 font-sans">Live Phone Test</h3>
+                <p className="text-xs text-gray-500 mt-1">Send a live test call to your mobile device to speak with the showroom assistant.</p>
               </div>
               <OutboundController
                 onCallInitiated={(phone, callId) => {
@@ -135,8 +135,8 @@ export default function DashboardPage() {
                   handleLeadCreateOrUpdate({
                     customer_phone: phone,
                     customer_name: 'Interested Customer',
-                    project_scope: 'Awaiting discovery...',
-                    material_preference: 'Awaiting preference...',
+                    project_scope: 'Waiting for details...',
+                    material_preference: 'Waiting for preference...',
                   });
                 }}
               />
@@ -149,7 +149,7 @@ export default function DashboardPage() {
                   <User className="w-4 h-4 text-gray-500" /> Showroom Customer Profile
                 </h2>
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-50 border border-[var(--color-border-hairline)] text-[10px] font-bold text-gray-500">
-                  <ShieldCheck className="w-3.5 h-3.5 text-blue-500" /> Verified Data
+                  <ShieldCheck className="w-3.5 h-3.5 text-blue-500" /> Verified Lead
                 </div>
               </div>
 
@@ -159,7 +159,7 @@ export default function DashboardPage() {
                     Client Identity
                   </span>
                   <span className="text-sm font-bold text-gray-900">
-                    {leadData.customer_name || 'Awaiting name resolution...'}
+                    {leadData.customer_name || 'Waiting for name...'}
                   </span>
                 </div>
 
@@ -168,7 +168,7 @@ export default function DashboardPage() {
                     Contact Phone
                   </span>
                   <span className="text-sm font-bold text-gray-900 font-mono">
-                    {leadData.customer_phone || 'Awaiting connection...'}
+                    {leadData.customer_phone || 'Waiting for call...'}
                   </span>
                 </div>
 
@@ -177,7 +177,7 @@ export default function DashboardPage() {
                     Scope of Interest
                   </span>
                   <span className="text-sm font-bold text-gray-900">
-                    {leadData.project_scope || 'Awaiting discovery...'}
+                    {leadData.project_scope || 'Waiting for details...'}
                   </span>
                 </div>
 
@@ -186,19 +186,19 @@ export default function DashboardPage() {
                     Material Preference
                   </span>
                   <span className="text-sm font-bold text-gray-900">
-                    {leadData.material_preference || 'Awaiting preference...'}
+                    {leadData.material_preference || 'Waiting for preference...'}
                   </span>
                 </div>
               </div>
 
               <div className="pt-4 border-t border-[var(--color-border-hairline)] flex flex-wrap justify-between items-center gap-2 text-xs">
-                <span className="text-gray-400 font-medium font-sans">Slab Layout Matching Status</span>
+                <span className="text-gray-400 font-medium font-sans">Showroom Slabs & Layouts</span>
                 <div className="flex gap-2">
                   <span className="px-2.5 py-1 rounded-full bg-gray-50 border border-[var(--color-border-hairline)] font-bold text-gray-600 text-[10px] uppercase tracking-wider">
-                    Edge profile ok
+                    Edge Profile Ready
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-gray-50 border border-[var(--color-border-hairline)] font-bold text-gray-600 text-[10px] uppercase tracking-wider">
-                    CRM Synced
+                    Profile Saved
                   </span>
                 </div>
               </div>
@@ -208,7 +208,7 @@ export default function DashboardPage() {
             <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] overflow-hidden shadow-xs">
               <div className="p-6 pb-0">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-gray-900 flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-gray-500" /> Active Workspace Dialogue
+                  <FileText className="w-4 h-4 text-gray-500" /> Live Conversation Feed
                 </h2>
               </div>
               <LiveActivityFeed
@@ -225,14 +225,14 @@ export default function DashboardPage() {
                     <RefreshCw className={`w-4 h-4 text-gray-600 ${currentStatus === 'CALL_IN_PROGRESS' ? 'animate-spin' : ''}`} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-gray-900">Showroom CRM Hub</h4>
-                    <p className="text-[11px] text-gray-400 font-medium leading-none mt-1">Status: Ready & Active</p>
+                    <h4 className="text-sm font-bold text-gray-900">Showroom Lead Sync</h4>
+                    <p className="text-[11px] text-gray-400 font-medium leading-none mt-1">Database: Active & Saved</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-1.5 bg-green-50 px-2.5 py-1 border border-green-100 rounded-full">
                   <CheckCircle className="w-3.5 h-3.5 text-green-600" />
-                  <span className="text-[9px] font-bold text-green-700 uppercase tracking-wider">Synchronized</span>
+                  <span className="text-[9px] font-bold text-green-700 uppercase tracking-wider">Saved & Synced</span>
                 </div>
               </div>
             </div>

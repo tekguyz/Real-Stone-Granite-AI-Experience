@@ -60,10 +60,10 @@ export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
           {/* Scrollable Content */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
             <h2 className="text-xl md:text-3xl font-sans tracking-tight text-[var(--color-primary)] mb-4">
-              Welcome to the Showroom Front Desk Workspace
+              Welcome to the Real Stone & Granite Showroom Assistant
             </h2>
             <p className="text-[14px] md:text-[15px] text-[var(--color-primary)] opacity-80 leading-relaxed mb-6 md:mb-8">
-              This workspace demonstrates how premium service providers and high-end trade businesses protect their revenue when their team cannot get to the phone. This system acts as an instant overflow and after-hours front desk—answering seamlessly whenever your main line is busy or when an inquiry comes in after regular business hours—ensuring potential clients connect immediately instead of hanging up to call a competitor.
+              This system demonstrates how premium service providers and high-end trade businesses protect their revenue when their team cannot get to the phone. This system acts as an instant overflow and after-hours receptionist—answering seamlessly whenever your main line is busy or when an inquiry comes in after regular business hours—ensuring potential clients connect immediately instead of hanging up to call a competitor.
             </p>
 
             <h3 className="text-base md:text-lg font-sans font-semibold text-[var(--color-primary)] mb-4">
@@ -140,7 +140,7 @@ export default function WelcomeModal({ isOpen, onClose }: WelcomeModalProps) {
               onClick={handleClose}
               className="w-full sm:w-auto px-6 py-2.5 bg-[var(--color-primary)] hover:bg-black text-white text-xs md:text-sm font-semibold rounded-[var(--radius-md)] transition-colors shadow-sm"
             >
-              Enter Showroom Workspace
+              Enter Showroom Dashboard
             </button>
           </div>
         </motion.div>
