@@ -244,7 +244,7 @@ export default function DashboardPage() {
             
             {/* Smartphone Simulated Display */}
             <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 shadow-xs flex flex-col gap-3 items-center">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans self-start">Simulated Client Smartphone</h3>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans self-start">Customer Phone Simulator</h3>
               <DeviceSimulator
                 currentStatus={currentStatus}
                 onStatusChange={handleStatusChange}
@@ -256,7 +256,7 @@ export default function DashboardPage() {
 
             {/* Email Viewport */}
             <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 shadow-xs flex flex-col gap-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans">Delivered Transactional Material</h3>
+              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans">Instant Email Notification</h3>
               <EmailViewport
                 currentStatus={currentStatus}
                 leadData={leadData}
@@ -273,7 +273,7 @@ export default function DashboardPage() {
       <footer className="border-t border-[var(--color-border-hairline)] py-8 bg-white shrink-0">
         <div className="max-w-[1200px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400 font-sans">
           <p>
-            Real Stone & Granite Corp © {new Date().getFullYear()} • Integrity • Quality • Craftsmanship
+            Real Stone & Granite © {new Date().getFullYear()} • Integrity • Quality • Craftsmanship
           </p>
           <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1 rounded-full text-[11px]">
             <span className="text-gray-400 font-medium">Digital Craft by</span>

@@ -207,11 +207,11 @@ export default function DeviceSimulator({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex justify-between items-center">
-                <span className="text-[11px] font-bold text-gray-900 font-sans">Showroom Desk</span>
+                <span className="text-[11px] font-bold text-gray-900 font-sans">Real Stone & Granite</span>
                 <span className="text-[9px] text-gray-400 font-mono">Just Now</span>
               </div>
               <p className="text-xs text-gray-600 mt-1 font-sans leading-relaxed">
-                Walkthrough appointment confirmed for {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
+                Walkthrough appointment confirmed with Real Stone for {isWednesdaySelection ? 'Wednesday at 2:00 PM' : 'tomorrow at 10:00 AM'}. Checklist sent to your email address!
               </p>
             </div>
           </motion.div>
