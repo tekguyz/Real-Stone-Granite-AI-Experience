@@ -39,24 +39,23 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #ffffff;
             color: #111111;
-            padding: 8px;
+            padding: 4px;
             margin: 0;
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
           }
           .email-card {
-            max-width: 500px;
-            margin: 0 auto;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 16px;
+            max-width: 100%;
+            margin: 0;
+            border: none;
+            padding: 8px;
             background-color: #ffffff;
             word-wrap: break-word;
             box-sizing: border-box;
           }
           @media (min-width: 480px) {
-            body { padding: 16px; }
-            .email-card { padding: 24px; }
+            body { padding: 12px; }
+            .email-card { padding: 12px; }
           }
           .title {
             font-size: 18px;
@@ -190,7 +189,7 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
   `;
 
   return (
-    <div id="email-viewport-container" className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 flex flex-col h-[380px] justify-between shadow-xs">
+    <div id="email-viewport-container" className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-4 sm:p-6 flex flex-col h-[460px] justify-between shadow-xs">
       {/* Email Client Top Bar Wrapper */}
       <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border-hairline)] mb-4">
         <div className="flex items-center gap-2">
@@ -199,22 +198,22 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
             <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b] opacity-80"></span>
             <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] opacity-80"></span>
           </div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 font-sans whitespace-nowrap">
+          <span className="text-xs font-bold uppercase tracking-wider text-gray-500 font-sans whitespace-nowrap">
             {"Customer's Inbox"}
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-xs text-[#10b981] font-semibold bg-green-50/80 px-2.5 py-1 rounded-full border border-green-100 shrink-0 whitespace-nowrap">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Active</span>
+        <div className="flex items-center gap-1.5 text-xs text-[#10b981] font-bold bg-green-50 px-2.5 py-1 rounded-full border border-green-100 shrink-0 whitespace-nowrap">
+          <ShieldCheck className="w-3.5 h-3.5 animate-pulse" />
+          <span>Simulation Mode</span>
         </div>
       </div>
 
       {/* Main Frame Rendering */}
-      <div className="flex-1 overflow-hidden bg-white border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] flex flex-col">
+      <div className="flex-1 overflow-y-auto bg-white flex flex-col">
         {!isCrmSynced && !isScheduled ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-gray-50/50">
+          <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-gray-50/50 rounded-lg border border-dashed border-[var(--color-border-hairline)]">
             <Mail className="w-8 h-8 text-gray-300 mb-2" />
-            <p className="text-xs text-gray-400 max-w-[280px] leading-relaxed">
+            <p className="text-xs text-gray-400 max-w-[280px] leading-relaxed font-medium">
               {"Once an appointment is booked or a material preference is selected during the conversation, the customer's design preference brochure and booking confirmation will be displayed here."}
             </p>
           </div>
@@ -222,16 +221,16 @@ export default function EmailViewport({ currentStatus, leadData, customEmailHtml
           <iframe
             id="email-preview-frame"
             srcDoc={generatedHtml}
-            className="w-full h-full border-none"
+            className="w-full h-full border-none flex-1 min-h-[280px]"
             title="Transactional Email Preview"
           />
         )}
       </div>
 
       {/* Footer Info */}
-      <div className="mt-3 flex justify-between items-center text-[10px] text-gray-400 font-sans">
-        <span>Delivery Mode: {process.env.RESEND_API_KEY ? 'Resend Live Email Service' : 'Simulated Live Delivery'}</span>
-        <span>Customer Notification System</span>
+      <div className="mt-4 pt-3 border-t border-[var(--color-border-hairline)] flex justify-between items-center text-[10px] text-gray-400 font-sans font-medium">
+        <span>Channel: Transactional Email API</span>
+        <span>Secure Delivery Simulated</span>
       </div>
     </div>
   );

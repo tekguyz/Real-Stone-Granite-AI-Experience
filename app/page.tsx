@@ -6,13 +6,16 @@ import DeviceSimulator from '@/components/DeviceSimulator';
 import EmailViewport from '@/components/EmailViewport';
 import OutboundController from '@/components/OutboundController';
 import WelcomeModal from '@/components/WelcomeModal';
-import { Database, User, Calendar, RefreshCw, FileText, CheckCircle, Flame, Layers, ShieldCheck } from 'lucide-react';
+import { Database, User, Calendar, RefreshCw, FileText, CheckCircle, Flame, Layers, ShieldCheck, Sparkles, BookOpen, ChevronRight, HelpCircle, Clipboard, Check, Mail, Settings } from 'lucide-react';
 
 export default function DashboardPage() {
   const [currentStatus, setCurrentStatus] = useState<string>('AWAITING_CALL');
   const [customEmailHtml, setCustomEmailHtml] = useState<string>('');
   const [activeMobileTab, setActiveMobileTab] = useState<'workspace' | 'device'>('workspace');
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
+  const [showCrmPayload, setShowCrmPayload] = useState(false);
+  const [activePlaybookTab, setActivePlaybookTab] = useState<'persona' | 'tools' | 'receptionist'>('persona');
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [leadData, setLeadData] = useState<any>({
     customer_name: '',
     customer_phone: '',
@@ -89,7 +92,7 @@ export default function DashboardPage() {
       </header>
 
       {/* Main Workspace Area */}
-      <main className="flex-1 w-full max-w-[1200px] mx-auto py-8 lg:py-12 px-4 sm:px-6">
+      <main className="flex-1 w-full max-w-[1200px] mx-auto py-6 lg:py-12 px-3 sm:px-6">
         
         {/* Mobile Segmented Toggle Control (State-Preserving) */}
         <div className="block lg:hidden mb-6">
@@ -217,52 +220,162 @@ export default function DashboardPage() {
               />
             </div>
 
-            {/* CRM Status Tracker Bento Card */}
-            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 shadow-xs flex flex-col gap-4">
-              <div className="flex items-center justify-between">
+            {/* CRM Status Tracker & Sync Ledger Bento Card */}
+            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 shadow-xs flex flex-col gap-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[var(--color-border-hairline)] pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-gray-50 rounded-full border border-[var(--color-border-hairline)] flex items-center justify-center shadow-inner">
-                    <RefreshCw className={`w-4 h-4 text-gray-600 ${currentStatus === 'CALL_IN_PROGRESS' ? 'animate-spin' : ''}`} />
+                  <div className="w-10 h-10 bg-gray-50 rounded-full border border-[var(--color-border-hairline)] flex items-center justify-center shadow-inner">
+                    <Database className={`w-5 h-5 text-gray-700 ${currentStatus === 'CALL_IN_PROGRESS' ? 'animate-bounce' : ''}`} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-gray-900">Showroom Lead Sync</h4>
-                    <p className="text-[11px] text-gray-400 font-medium leading-none mt-1">Database: Active & Saved</p>
+                    <h3 className="text-sm font-bold text-gray-950 uppercase tracking-wider font-sans">Showroom CRM Live Database</h3>
+                    <p className="text-xs text-gray-400">Real-time StoneApp database synchronization ledger</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-1.5 bg-green-50 px-2.5 py-1 border border-green-100 rounded-full">
-                  <CheckCircle className="w-3.5 h-3.5 text-green-600" />
-                  <span className="text-[9px] font-bold text-green-700 uppercase tracking-wider">Saved & Synced</span>
+                <div className="flex items-center gap-2 self-start sm:self-center">
+                  <button
+                    onClick={() => setShowCrmPayload(!showCrmPayload)}
+                    className="text-[11px] bg-gray-50 hover:bg-gray-100 text-gray-700 font-semibold py-1.5 px-3 rounded-lg border border-[var(--color-border-hairline)] transition-all flex items-center gap-1.5"
+                  >
+                    {showCrmPayload ? 'View Database Logs' : 'Inspect API Payload'}
+                  </button>
+                  <div className="flex items-center gap-1 bg-green-50 px-2.5 py-1 border border-green-100 rounded-full">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping"></span>
+                    <span className="text-[9px] font-bold text-green-700 uppercase tracking-widest">Active</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
+              {showCrmPayload ? (
+                <div className="space-y-3">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block">StoneApp Sync API Payload Structure</span>
+                  <div className="bg-gray-950 text-gray-100 rounded-lg p-4 font-mono text-[11px] overflow-x-auto leading-relaxed border border-gray-800">
+                    <pre>{JSON.stringify({
+                      api_version: "2026.07.01",
+                      source: "Vapi_AfterHours_Receptionist",
+                      crm_destination: "StoneApp_PRO_v4",
+                      lead_data: {
+                        first_name: leadData.customer_name ? leadData.customer_name.split(' ')[0] : 'Interested',
+                        last_name: leadData.customer_name ? leadData.customer_name.split(' ').slice(1).join(' ') : 'Customer',
+                        phone: leadData.customer_phone || 'Awaiting...',
+                        email: leadData.customer_email || 'Awaiting...',
+                        interest: leadData.project_scope || 'Pending Discovery',
+                        slab_preference: leadData.material_preference || 'Pending Selection',
+                        appointment: leadData.appointment_timestamp || null,
+                        edge_profile_requested: "Edge Profile Ready"
+                      },
+                      sync_status: currentStatus === 'CALL_IN_PROGRESS' ? 'SYNCING_IN_PROGRESS' : 'SYNCHRONIZED',
+                      timestamp: new Date().toISOString()
+                    }, null, 2)}</pre>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block">CRM Transaction Logs</span>
+                  <div className="divide-y divide-[var(--color-border-hairline)]">
+                    
+                    {/* Active Live Sync Lead Row */}
+                    {leadData.customer_phone && (
+                      <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-amber-50/50 -mx-4 px-4 rounded-lg border border-amber-100/50">
+                        <div className="flex items-start gap-2.5">
+                          <div className="w-8 h-8 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0 mt-0.5">
+                            <Sparkles className="w-4 h-4 text-amber-600 animate-pulse" />
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-gray-900 flex items-center gap-1.5">
+                              {leadData.customer_name || 'Active Guest Caller'}
+                              <span className="text-[9px] bg-amber-100 text-amber-800 font-extrabold px-1.5 py-0.2 rounded-full uppercase tracking-wider animate-pulse">Live</span>
+                            </div>
+                            <p className="text-[11px] text-gray-500 font-mono mt-0.5">{leadData.customer_phone}</p>
+                            <div className="flex flex-wrap gap-1.5 mt-1.5">
+                              <span className="text-[10px] text-gray-600 font-medium">Scope: {leadData.project_scope || 'Gathering details...'}</span>
+                              <span className="text-gray-300">•</span>
+                              <span className="text-[10px] text-gray-600 font-medium">Pref: {leadData.material_preference || 'Awaiting selection...'}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-2 py-0.5 rounded uppercase tracking-wider">
+                            {currentStatus === 'CALL_IN_PROGRESS' ? 'Syncing...' : 'Saved to Profile'}
+                          </span>
+                          <span className="text-[9px] text-gray-400 block font-mono mt-1">Just Now</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Simulated Past CRM Lead 1 */}
+                    <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="flex items-start gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+                          <CheckCircle className="w-4 h-4 text-emerald-600" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-gray-900">Martha Sterling</div>
+                          <p className="text-[11px] text-gray-500 font-mono mt-0.5">(561) 332-9011</p>
+                          <div className="flex flex-wrap gap-1.5 mt-1">
+                            <span className="text-[10px] text-gray-500">Scope: Bookmatched Fireplace Surround</span>
+                            <span className="text-gray-300">•</span>
+                            <span className="text-[10px] text-gray-500">Pref: Calacatta Marble</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-wider border border-emerald-100">
+                          Synced to CRM
+                        </span>
+                        <span className="text-[9px] text-gray-400 block font-mono mt-1">Synced 4 hrs ago</span>
+                      </div>
+                    </div>
+
+                    {/* Simulated Past CRM Lead 2 */}
+                    <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="flex items-start gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+                          <CheckCircle className="w-4 h-4 text-emerald-600" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-gray-900">Bill Thompson</div>
+                          <p className="text-[11px] text-gray-500 font-mono mt-0.5">(772) 489-0122</p>
+                          <div className="flex flex-wrap gap-1.5 mt-1">
+                            <span className="text-[10px] text-gray-500">Scope: Custom Kitchen Island Slab</span>
+                            <span className="text-gray-300">•</span>
+                            <span className="text-[10px] text-gray-500">Pref: Taj Mahal Quartzite</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded uppercase tracking-wider border border-emerald-100">
+                          Synced to CRM
+                        </span>
+                        <span className="text-[9px] text-gray-400 block font-mono mt-1">Synced Yesterday</span>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Column B: Simulated Device Components (Smartphone and email render) */}
           <div className={`lg:col-span-5 flex-col gap-6 lg:gap-8 ${activeMobileTab === 'device' ? 'flex' : 'hidden lg:flex'}`}>
             
             {/* Smartphone Simulated Display */}
-            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 shadow-xs flex flex-col gap-3 items-center">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans self-start">Customer Phone Simulator</h3>
-              <DeviceSimulator
-                currentStatus={currentStatus}
-                onStatusChange={handleStatusChange}
-                onLeadCreateOrUpdate={handleLeadCreateOrUpdate}
-                leadData={leadData}
-                onEmailHtmlGenerated={setCustomEmailHtml}
-              />
-            </div>
+            <DeviceSimulator
+              currentStatus={currentStatus}
+              onStatusChange={handleStatusChange}
+              onLeadCreateOrUpdate={handleLeadCreateOrUpdate}
+              leadData={leadData}
+              onEmailHtmlGenerated={setCustomEmailHtml}
+            />
 
             {/* Email Viewport */}
-            <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-3 sm:p-6 shadow-xs flex flex-col gap-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 font-sans">Instant Email Notification</h3>
-              <EmailViewport
-                currentStatus={currentStatus}
-                leadData={leadData}
-                customEmailHtml={customEmailHtml}
-              />
-            </div>
+            <EmailViewport
+              currentStatus={currentStatus}
+              leadData={leadData}
+              customEmailHtml={customEmailHtml}
+            />
 
           </div>
 
