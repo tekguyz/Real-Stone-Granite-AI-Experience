@@ -124,7 +124,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* Column A: Active Workspace Components (Dialogue feed, CRM stats, controller) */}
-          <div className={`lg:col-span-7 flex-col gap-6 lg:gap-8 ${activeMobileTab === 'workspace' ? 'flex' : 'hidden lg:flex'}`}>
+          <div className={`lg:col-span-8 flex-col gap-6 lg:gap-8 ${activeMobileTab === 'workspace' ? 'flex' : 'hidden lg:flex'}`}>
             
             {/* Outbound Controller */}
             <div className="bg-white rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 shadow-xs flex flex-col gap-4">
@@ -359,7 +359,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Column B: Simulated Device Components (Smartphone and email render) */}
-          <div className={`lg:col-span-5 flex-col gap-6 lg:gap-8 ${activeMobileTab === 'device' ? 'flex' : 'hidden lg:flex'}`}>
+          <div className={`lg:col-span-4 flex-col gap-6 lg:gap-8 ${activeMobileTab === 'device' ? 'flex' : 'hidden lg:flex'}`}>
             
             {/* Smartphone Simulated Display */}
             <DeviceSimulator

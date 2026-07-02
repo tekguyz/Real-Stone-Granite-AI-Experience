@@ -220,7 +220,7 @@ export default function LiveActivityFeed({
   };
 
   return (
-    <div id="live-activity-feed-container" className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-6 flex flex-col h-[400px]">
+    <div id="live-activity-feed-container" className="bg-[var(--color-surface-card)] rounded-b-[var(--radius-lg)] p-4 sm:p-6 flex flex-col h-[400px] sm:h-[450px] lg:h-[500px] border-t-0">
       {/* Header Status block */}
       <div className="flex items-center justify-between pb-4 border-b border-[var(--color-border-hairline)] mb-4">
         <div className="flex items-center gap-2">

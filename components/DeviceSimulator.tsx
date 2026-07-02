@@ -248,7 +248,7 @@ export default function DeviceSimulator({
     <div id="device-simulator-container" className="w-full flex flex-col items-center relative select-none">
       
       {/* Sleek, Minimal Smartphone Framework */}
-      <div className="w-full max-w-[280px] min-[360px]:max-w-[305px] sm:max-w-[320px] h-[585px] min-[360px]:h-[615px] sm:h-[635px] bg-white rounded-[32px] shadow-lg border-8 border-gray-900 p-3.5 pb-7 sm:p-4 sm:pb-8 relative flex flex-col overflow-hidden">
+      <div className="w-full max-w-[280px] min-[360px]:max-w-[305px] sm:max-w-[320px] lg:max-w-[340px] h-[585px] min-[360px]:h-[615px] sm:h-[635px] lg:h-[680px] bg-white rounded-[32px] shadow-lg border-[8px] lg:border-[10px] border-gray-900 p-3.5 pb-7 sm:p-4 sm:pb-8 relative flex flex-col overflow-hidden shrink-0">
         
         {/* Slide-Down Text Notification Alert Bubble (Confined Inside Phone Bounds) */}
         <AnimatePresence>
@@ -300,20 +300,20 @@ export default function DeviceSimulator({
                 exit={{ opacity: 0 }}
                 className="flex-1 flex flex-col justify-between overflow-y-auto pr-0.5 scrollbar-thin"
               >
-                <div className="space-y-6 pt-4">
+                <div className="space-y-4 pt-2 sm:pt-4">
                   <div className="text-center pt-2">
                     <span className="text-[10px] uppercase font-bold tracking-widest text-success-text bg-success-bg px-2.5 py-1 rounded-full border border-success-border">
                       Live Simulation Line
                     </span>
-                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 mt-4">
+                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 mt-3 sm:mt-4">
                       Voice Agent Sarah
                     </h3>
-                    <p className="text-xs text-gray-500 mt-2 px-3 leading-relaxed">
+                    <p className="text-[11px] sm:text-xs text-gray-500 mt-1 sm:mt-2 px-3 leading-relaxed">
                       Experience the showroom reception voice assistant on a simulated active phone line.
                     </p>
                   </div>
 
-                  <div className="space-y-5 pt-2">
+                  <div className="space-y-3 sm:space-y-4 pt-2">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">
                         Caller Name
@@ -366,7 +366,7 @@ export default function DeviceSimulator({
 
                 <button
                   onClick={handleStartCall}
-                  className="w-full bg-success-solid hover:bg-success-solid-hover text-white py-3.5 rounded-[var(--radius-lg)] text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md mt-auto mb-4"
+                  className="w-full bg-success-solid hover:bg-success-solid-hover text-white py-3 sm:py-3.5 rounded-[var(--radius-lg)] text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md mt-auto mb-2 sm:mb-4"
                 >
                   <Phone className="w-4 h-4 fill-white stroke-white" /> Start Inbound Call
                 </button>
@@ -377,14 +377,14 @@ export default function DeviceSimulator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col justify-between py-1 sm:py-2.5 overflow-y-auto pr-0.5 scrollbar-thin"
+                className="flex-1 flex flex-col justify-between py-1 sm:py-2 overflow-y-auto pr-0.5 scrollbar-thin"
               >
                 {/* Active Call Header */}
                 <div className="text-center shrink-0 space-y-0.5">
                   <div className="w-10 h-10 sm:w-11 sm:h-11 bg-success-solid rounded-full flex items-center justify-center mx-auto mb-1 shadow-sm">
                     <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse fill-white stroke-white" />
                   </div>
-                  <h4 className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">{name || 'Interested Customer'}</h4>
+                  <h4 className="text-sm font-bold text-gray-900 leading-tight">{name || 'Interested Customer'}</h4>
                   <span className="text-[9px] text-gray-400 block font-mono bg-gray-100/80 px-1.5 py-0.2 rounded-full w-fit mx-auto">{phone}</span>
                   <span className="text-[11px] sm:text-xs font-bold text-success-text tracking-wider uppercase mt-0.5 block">
                     {formatDuration(callDuration)}
@@ -392,26 +392,28 @@ export default function DeviceSimulator({
                 </div>
 
                 {/* Simulated AI Agent Response options */}
-                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-2 sm:p-2.5 my-1 sm:my-1.5 flex-1 flex flex-col justify-between min-h-0 overflow-hidden">
-                  <div className="flex-1 flex flex-col justify-center text-center p-0.5 mb-1.5 overflow-y-auto min-h-[40px] sm:min-h-[50px]">
-                    <span className="text-[9px] uppercase font-bold tracking-wider text-success-text block mb-0.5">
-                      Sarah (Voice Assistant)
-                    </span>
-                    <p className="text-[10px] min-[360px]:text-[11px] sm:text-xs text-gray-800 font-sans leading-relaxed font-semibold px-1">
-                      &ldquo;{simulationScript[simStep].agent}&rdquo;
-                    </p>
+                <div className="bg-[var(--color-surface-card)] rounded-[var(--radius-lg)] border border-[var(--color-border-hairline)] p-2.5 sm:p-3.5 my-1.5 sm:my-2 flex-1 flex flex-col min-h-0 overflow-hidden shadow-sm">
+                  <div className="flex-1 flex flex-col justify-center text-center overflow-y-auto min-h-[50px]">
+                    <div>
+                      <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-success-text block mb-1">
+                        Sarah (Voice Assistant)
+                      </span>
+                      <p className="text-[11px] sm:text-xs text-gray-800 font-sans leading-relaxed font-semibold px-2">
+                        &ldquo;{simulationScript[simStep].agent}&rdquo;
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="space-y-1 shrink-0">
-                    <span className="text-[8px] sm:text-[9px] uppercase font-bold tracking-widest text-gray-400 block mb-0.5">
-                      Respond as Caller:
+                  <div className="shrink-0 border-t border-[var(--color-border-hairline)] pt-2.5 mt-2 space-y-1.5">
+                    <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-gray-400 block mb-1 text-center">
+                      Select Response:
                     </span>
-                    <div className="max-h-[145px] overflow-y-auto pr-0.5 space-y-1">
+                    <div className="max-h-[160px] overflow-y-auto pr-1 space-y-1.5 scrollbar-thin">
                       {simulationScript[simStep].options.map((opt, i) => (
                         <button
                           key={i}
                           onClick={() => handleOptionSelect(opt)}
-                          className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] py-1 sm:py-1.5 px-2 sm:px-2.5 text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] font-sans font-semibold text-gray-700 transition-all shadow-xs h-auto leading-tight active:scale-[0.98]"
+                          className="w-full text-left bg-white hover:bg-gray-50 border border-[var(--color-border-hairline)] rounded-[var(--radius-md)] py-2 px-3 text-[10px] sm:text-[11px] font-sans font-semibold text-gray-700 transition-all shadow-xs h-auto leading-tight active:scale-[0.98]"
                         >
                           {opt}
                         </button>
@@ -421,22 +423,22 @@ export default function DeviceSimulator({
                 </div>
 
                 {/* Call Action Triggers */}
-                <div className="flex justify-center gap-6 pb-0.5 sm:pb-1 shrink-0">
+                <div className="flex justify-center gap-6 sm:gap-8 pb-1 sm:pb-2 pt-1 shrink-0">
                   <div className="flex flex-col items-center">
-                    <button className="w-9 h-9 sm:w-10 sm:h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
-                      <Mic className="w-4 h-4" />
+                    <button className="w-11 h-11 sm:w-12 sm:h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-600 transition-colors">
+                      <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
-                    <span className="text-[8px] sm:text-[9px] text-gray-500 font-semibold mt-0.5">Mute</span>
+                    <span className="text-[9px] sm:text-[10px] text-gray-500 font-semibold mt-1">Mute</span>
                   </div>
 
                   <div className="flex flex-col items-center">
                     <button
                       onClick={handleEndCall}
-                      className="w-9 h-9 sm:w-10 sm:h-10 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-md"
+                      className="w-11 h-11 sm:w-12 sm:h-12 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors shadow-md"
                     >
-                      <PhoneOff className="w-4 h-4" />
+                      <PhoneOff className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
-                    <span className="text-[8px] sm:text-[9px] text-red-600 font-bold mt-0.5">End</span>
+                    <span className="text-[9px] sm:text-[10px] text-red-600 font-bold mt-1">End</span>
                   </div>
                 </div>
               </motion.div>
