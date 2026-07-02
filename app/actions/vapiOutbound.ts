@@ -5,7 +5,7 @@ const AUTHORIZED_NUMBERS = ['5617191479', '5617191480', '7726349743'];
 
 export async function triggerOutboundCall(targetPhoneNumber: string) {
   const apiKey = process.env.VAPI_API_KEY;
-  const assistantId = "71038d0a-fde3-4c47-8def-cb03b26fa46e";
+  const assistantId = process.env.VAPI_ASSISTANT_ID || "71038d0a-fde3-4c47-8def-cb03b26fa46e";
   const phoneNumberId = process.env.VAPI_PHONE_NUMBER_ID;
 
   // Clean raw digits to enforce strict whitelist restrictions
